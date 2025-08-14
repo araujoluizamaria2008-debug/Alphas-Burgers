@@ -23,10 +23,25 @@ main {
   border-radius: 10px;
   padding: 20px;
   display: inline-block;
+  max-width: 400px;
 }
 .produto-detalhe img {
-  width: 300px;
+  width: 100%;
   border-radius: 10px;
+  margin-bottom: 15px;
+}
+.produto-detalhe ul {
+  text-align: left;
+  margin: 10px 0;
+  padding-left: 20px;
+}
+.produto-detalhe li {
+  margin-bottom: 5px;
+}
+.produto-detalhe p.descricao-final {
+  margin-top: 15px;
+  font-style: italic;
+  color: #555;
 }
 .botoes button {
   padding: 10px;
@@ -58,12 +73,14 @@ input[type=number] {
 <main>
   <div class="produto-detalhe">
     <img src="viriginia.jpeg" alt="Combo Virgínia">
-    <p>Burger Artesanal: pão macio, hambúrguer bovino suculento, alface fresquinha, <br> tomate, queijo derretido e um toque especial de picles. 
-    <p>Batata Média Crocante </p>
-    <p>Coca-Cola Temática Exclusiva</p>
-    <p> Especial: Body Splash by Virgínia — leve o cheirinho da diva pra casa! </p>
-    </p>Um combo completo, cheio de estilo e sabor. <Br>Perfeito pra quem ama comer bem e ainda sair perfumada! .</p>
-    <p>Preço: R$ 200,00</p>
+    <ul>
+      <li>Burger Artesanal: pão macio, hambúrguer bovino suculento, alface fresquinha, tomate, queijo derretido e um toque especial de picles</li>
+      <li>Batata Média Crocante</li>
+      <li>Coca-Cola Temática Exclusiva</li>
+      <li>Brinde Especial: Body Splash by Virgínia — leve o cheirinho da diva pra casa!</li>
+    </ul>
+    <p class="descricao-final">Um combo completo, cheio de estilo e sabor. Perfeito pra quem ama comer bem e ainda sair perfumada!</p>
+    <p><strong>Preço:</strong> R$ 200,00</p>
     <label>Quantidade: <input type="number" min="1" value="1"></label>
     <div class="botoes">
       <button onclick="window.location.href='labubônicos.html'">⬅ Voltar</button>
