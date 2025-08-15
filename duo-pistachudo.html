@@ -78,13 +78,50 @@ input[type=number] {
     </ul>
     <p class="descricao-final">Uma explosão de sabores únicos e inesquecíveis, ideal para os apaixonados por experiências deliciosas e diferenciadas!</p>
     <p><strong>Preço:</strong> R$ 40,00</p>
-    <label>Quantidade: <input type="number" min="1" value="1"></label>
-    <div class="botoes">
-      <button onclick="window.location.href='labubônicos.html'">⬅ Voltar</button>
-      <button>Adicionar ao carrinho</button>
-    </div>
+    
+     
+    <form method="GET" action="carrinho- confirmação.html" style="display: inline;">
+    <input type="hidden" name="produto" value="duo pistachudo">
+    <input type="hidden" name="preco" value="40.00">
+    <label>Quantidade: <input type="number" name="quantidade_duopist" min="1" value="1" style="width:50px; padding:5px; border-radius:5px; border:1px solid #ccc; margin-left:5px;"></label>
+    <br><br>
+    <button onclick="window.location.href='labubônicos.html'" type="button" style="padding:10px; border:none; border-radius:8px; background-color:#ffc285; cursor:pointer; font-size:16px; margin:10px;">← Voltar</button>
+    <button type="submit" style="padding:10px; border:none; border-radius:8px; background-color:#ffc285; cursor:pointer; font-size:16px; margin:10px;">Adicionar ao carrinho</button>
+</form>
   </div>
 </main>
 
+<!-- Carrinho flutuante animado -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  <a href="carrinho.html" style="display: block; background: linear-gradient(45deg, #ffc285, #ffb95c); color: #8B4513; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(255, 194, 133, 0.4); border: 3px solid #fff; transition: all 0.3s ease;">
+    <span style="font-size: 24px;">🛒</span>
+    <span style="margin-left: 8px;">Carrinho</span>
+  </a>
+</div>
+
+<style>
+/* Animação do carrinho */
+div[style*="position: fixed; bottom: 20px; right: 20px"] a:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(255, 194, 133, 0.6) !important;
+}
+
+/* Responsivo para celular */
+@media (max-width: 600px) {
+  div[style*="position: fixed; bottom: 20px; right: 20px"] {
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] a {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] span:first-child {
+    font-size: 20px !important;
+  }
+}
+</style>
 </body>
 </html>
