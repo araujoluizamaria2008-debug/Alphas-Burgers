@@ -1,0 +1,67 @@
+<head>
+<meta charset="UTF-8">
+<title>Refrigerante 350ml - Alpha's Burgues</title>
+<style>
+body {background-color:#fff5ec; font-family:Arial, sans-serif; text-align:center; margin:0;}
+header{background-color:#ffcf96; padding:10px;}
+main{padding:20px;}
+.produto-detalhe{
+  background-color:#fff0e0; 
+  border:2px solid #ffc285; 
+  border-radius:10px; 
+  padding:20px; 
+  display:inline-block;
+}
+.produto-detalhe img{width:300px; border-radius:10px; margin:10px 0;}
+.botoes button{
+  padding:10px; 
+  border:none; 
+  border-radius:8px; 
+  background-color:#ffc285; 
+  cursor:pointer; 
+  font-size:16px; 
+  margin:10px;
+}
+.botoes button:hover{background-color:#ffb95c;}
+input[type=number]{width:50px; padding:5px; border-radius:5px; border:1px solid #ccc; margin-left:5px;}
+select{
+  padding:5px 10px;
+  border-radius:5px;
+  border:1px solid #ccc;
+  margin:10px 0;
+  font-size:16px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Refrigerante 350ml</h1>
+</header>
+
+<main>
+  <div class="produto-detalhe">
+    <img src="refri.jpeg" alt="Refrigerante 350ml">
+    <img src="coca labubu.png" alt="Coca Labubu" width="200" style="border-radius: 50px;" />
+    <img src="coca virgi.png" alt="Coca Virgi" width="300" style="border-radius: 50px;" />
+    <p>Refrigerantes geladinhos, disponível em diversos modelos, ideal para acompanhar seus combos.</p>
+    <p>Preço: R$16,90</p>
+
+    <!--tipo de refrigerante -->
+    <label for="tipo-refri">Escolha o tipo:</label>
+    <select id="tipo-refri" name="tipo-refri">
+      <option value="coca-labubu">Coca Labubu</option>
+      <option value="coca-boobie">Coca Boobie Goods</option>
+      <option value="coca-virginia">Coca Virgínia</option>
+    </select>
+
+    <label>Quantidade: <input type="number" min="1" value="1"></label>
+    <div class="botoes">
+      <button onclick="window.location.href='labubônicos.html'">⬅ Voltar</button>
+      <button>Adicionar ao carrinho</button>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
