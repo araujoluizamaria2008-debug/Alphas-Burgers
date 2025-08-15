@@ -3,6 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <title>Alpha's Burgues 🍔✨</title>
+  <style>
+    /* Botão flutuante do carrinho */
+    .carrinho-flutuante {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, #e65c00, #ff6b00);
+      border: none;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+
+    .carrinho-flutuante:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(230, 92, 0, 0.6);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4); }
+      50% { box-shadow: 0 8px 25px rgba(230, 92, 0, 0.7); }
+      100% { box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4); }
+    }
+
+    .carrinho-contador {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #dc3545;
+      color: white;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      border: 2px solid white;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .carrinho-flutuante {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+      }
+      
+      .carrinho-contador {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+      }
+    }
+  </style>
 </head>
 <body style="background-color: #fff5ec; font-family: Arial, sans-serif;">
 
@@ -112,10 +181,54 @@
     </section>
   </main>
 
+  <!-- Botão Flutuante do Carrinho -->
+  <a href="carrinho.html" class="carrinho-flutuante" id="botao-carrinho">
+    🛒
+    <span class="carrinho-contador" id="contador-carrinho">0</span>
+  </a>
+
   <footer style="background-color: #ffcf96; text-align: center; padding: 10px;">
     <p>Alpha's Burgues © 2025</p>
   </footer>
 
-</body>
+  <script>
+    // Função para atualizar o contador do carrinho
+    function atualizarContadorCarrinho() {
+      try {
+        // Tenta ler do sessionStorage
+        const carrinhoSalvo = sessionStorage.getItem('alphas_carrinho');
+        let totalItens = 0;
+        
+        if (carrinhoSalvo) {
+          const carrinho = JSON.parse(carrinhoSalvo);
+          totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
+        }
+        
+        const contador = document.getElementById('contador-carrinho');
+        if (contador) {
+          contador.textContent = totalItens;
+          contador.style.display = totalItens > 0 ? 'flex' : 'none';
+        }
+      } catch (e) {
+        // Se houver erro, mantém contador em 0
+        const contador = document.getElementById('contador-carrinho');
+        if (contador) {
+          contador.textContent = '0';
+          contador.style.display = 'none';
+        }
+      }
+    }
 
+    // Atualiza o contador quando a página carrega
+    window.onload = function() {
+      atualizarContadorCarrinho();
+    };
+
+    // Atualiza o contador periodicamente (caso o usuário tenha múltiplas abas abertas)
+    setInterval(atualizarContadorCarrinho, 1000);
+
+    // Escuta mudanças no sessionStorage (funciona entre abas)
+    window.addEventListener('storage', atualizarContadorCarrinho);
+  </script>
+</body>
 </html>
