@@ -55,6 +55,83 @@ input[type=number] {
 </head>
 <body>
 
+
+<main>
+  
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Milkshake de Pistache - Alpha's Burgues</title>
+<style>
+body {
+  background-color: #fff5ec;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+header {
+  background-color: #ffcf96;
+  padding: 10px;
+}
+main {
+  padding: 20px;
+}
+.produto-detalhe {
+  background-color: #fff0e0;
+  border: 2px solid #ffc285;
+  border-radius: 10px;
+  padding: 20px;
+  display: inline-block;
+  max-width: 400px;
+}
+.produto-detalhe img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+.produto-detalhe ul {
+  text-align: left;
+  margin: 10px 0;
+  padding-left: 20px;
+}
+.produto-detalhe li {
+  margin-bottom: 5px;
+}
+.produto-detalhe p.descricao-final {
+  margin-top: 15px;
+  font-style: italic;
+  color: #555;
+}
+.botoes button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffc285;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px;
+}
+.botoes button:hover {
+  background-color: #ffb95c;
+}
+input[type=number] {
+  width: 50px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-left: 5px;
+}
+select {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+
 <header>
   <h1>Milkshake de Pistache 500ml</h1>
 </header>
@@ -62,20 +139,117 @@ input[type=number] {
 <main>
   <div class="produto-detalhe">
     <img src="MILK SHAKE DE PISTACHE .png" alt="Milkshake de Pistache">
-    <p class="descricao">
-      Uma explosão de sabor sofisticado em cada gole! Nosso Milkshake de Pistache é cremoso, refrescante e feito com sorvete premium e uma generosa porção de pistache de verdade. O sabor único da noz mais amada do momento agora em forma de bebida gelada, perfeita para quem ama sair do óbvio e se deliciar com o diferente.
-    </p>
-    <p class="descricao">
-      Ideal para refrescar os dias quentes com muito estilo — um milkshake verde, cremoso e absolutamente viciante.
-    </p>
-    <p><strong>Preço:</strong> R$ 45,90</p>
-    <label>Quantidade: <input type="number" min="1" value="1"></label>
-    <div class="botoes">
-      <button onclick="window.location.href='labubônicos.html'">⬅ Voltar</button>
-      <button>Adicionar ao carrinho</button>
-    </div>
+    <p>O milkshake mais cremoso e saboroso da cidade! Feito com pistaches selecionados e muito amor.</p>
+    <ul>
+      <li>500ml de pura cremosidade</li>
+      <li>Pistaches importados de alta qualidade</li>
+      <li>Sorvete artesanal de baunilha</li>
+      <li>Leite integral fresquinho</li>
+      <li>Chantilly especial por cima</li>
+      <li>Pitada de pistache triturado para finalizar</li>
+    </ul>
+    <p class="descricao-final">Perfeito para refrescar e adoçar seu dia com muito sabor!</p>
+    <p class="descricao-final">Preço: R$ 25,00</p>
+    
+    <form method="GET" action="carrinho-confirmacao.html" style="display: inline;">
+        <input type="hidden" name="produto" value="Milkshake de Pistache 500ml">
+        <input type="hidden" name="preco" value="25.00">
+
+        
+        <label for="tamanho-milk">Escolha o tamanho:</label>
+        <select id="tamanho-milk" name="tamanho_milk">
+            <option value="500ml - R$ 25,00">500ml - R$ 25,00</option>
+            <option value="700ml - R$ 32,00">700ml - R$ 32,00</option>
+        </select>
+        <br>
+        
+        <label for="extra-milk">Extras (opcional):</label>
+        <select id="extra-milk" name="extra_milk">
+            <option value="Sem extra">Sem extra</option>
+            <option value="Extra chantilly - +R$ 3,00">Extra chantilly - +R$ 3,00</option>
+            <option value="Extra pistache - +R$ 5,00">Extra pistache - +R$ 5,00</option>
+            <option value="Ambos - +R$ 7,00">Ambos - +R$ 7,00</option>
+        </select>
+        <br>
+        
+        
+    </form>
   </div>
 </main>
+<form method="GET" action="carrinho- confirmação.html" style="display: inline;">
+    <input type="hidden" name="produto" value="milk shake de pistache">
+    <input type="hidden" name="preco" value="40.00">
+    <label>Quantidade: <input type="number" name="quantidade_milkshake" min="1" value="1" style="width:50px; padding:5px; border-radius:5px; border:1px solid #ccc; margin-left:5px;"></label>
+    <br><br>
+    <button onclick="window.location.href='labubônicos.html'" type="button" style="padding:10px; border:none; border-radius:8px; background-color:#ffc285; cursor:pointer; font-size:16px; margin:10px;">← Voltar</button>
+    <button type="submit" style="padding:10px; border:none; border-radius:8px; background-color:#ffc285; cursor:pointer; font-size:16px; margin:10px;">Adicionar ao carrinho</button>
+</form>
 
+<!-- Carrinho flutuante animado -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  <a href="carrinho.html" style="display: block; background: linear-gradient(45deg, #ffc285, #ffb95c); color: #8B4513; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(255, 194, 133, 0.4); border: 3px solid #fff; transition: all 0.3s ease;">
+    <span style="font-size: 24px;">🛒</span>
+    <span style="margin-left: 8px;">Carrinho</span>
+  </a>
+</div>
+
+<style>
+/* Animação do carrinho */
+div[style*="position: fixed; bottom: 20px; right: 20px"] a:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(255, 194, 133, 0.6) !important;
+}
+
+/* Responsivo para celular */
+@media (max-width: 600px) {
+  .produto-detalhe {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] {
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] a {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] span:first-child {
+    font-size: 20px !important;
+  }
+}
+</style>
+
+</body>
+</html>
+</div>
+
+<style>
+/* Animação do carrinho */
+div[style*="position: fixed; bottom: 20px; right: 20px"] a:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(255, 194, 133, 0.6) !important;
+}
+
+/* Responsivo para celular */
+@media (max-width: 600px) {
+  div[style*="position: fixed; bottom: 20px; right: 20px"] {
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] a {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+  
+  div[style*="position: fixed; bottom: 20px; right: 20px"] span:first-child {
+    font-size: 20px !important;
+  }
+}
+</style>
 </body>
 </html>

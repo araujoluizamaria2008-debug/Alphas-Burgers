@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Carrinho - Alpha's Burgues</title>
+<style>
+body {
+  background-color: #fff5ec;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+.carrinho-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff0e0;
+  border: 2px solid #ffc285;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.item-carrinho {
+  background-color: #fff5ec;
+  border: 1px solid #ffc285;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-preco {
+  font-weight: bold;
+  color: #e65c00;
+}
+
+.total-container {
+  background-color: #ffcf96;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.botao {
+  background-color: #ffc285;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+  text-decoration: none;
+  display: inline-block;
+  color: black;
+}
+
+.botao:hover {
+  background-color: #ffb95c;
+}
+
+.botao-finalizar {
+  background-color: #e65c00;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  padding: 15px;
+}
+
+.formulario-item {
+  background-color: #fff0e0;
+  border: 2px solid #ffc285;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.campo-quantidade {
+  margin: 10px 0;
+}
+
+.campo-quantidade input {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.campo-quantidade select {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.preco-destaque {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e65c00;
+  margin: 10px 0;
+}
+
+.descricao-produto {
+  color: #666;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* Simulação de "estado" com CSS apenas */
+.carrinho-vazio {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px;
+}
+
+/* Estilo para mensagem de sucesso */
+.mensagem-sucesso {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .item-carrinho {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .formulario-item {
+    margin: 10px;
+    padding: 15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Exemplo de como ficaria cada produto -->
+<div class="carrinho-container">
+  <h1 style="text-align: center; color: #e65c00;">🛒 Seu Carrinho</h1>
+  
+  <!-- Formulário para Combo Virgínia -->
+  <form class="formulario-item" method="GET" action="carrinho-confirmacao.html">
+    <h3>Combo Virgínia</h3>
+    <img src="viriginia.jpeg" alt="Combo Virgínia" style="width: 150px; border-radius: 10px;">
+    <div class="descricao-produto">
+      Burger Artesanal + Batata Média + Coca-Cola Temática + Body Splash by Virgínia
+    </div>
+    <div class="preco-destaque">R$ 200,00</div>
+    
+    <div class="campo-quantidade">
+      <label>Quantidade: 
+        <input type="number" name="quantidade_virginia" min="1" max="10" value="1">
+      </label>
+    </div>
+    
+    <input type="hidden" name="produto" value="Combo Virgínia">
+    <input type="hidden" name="preco" value="200.00">
+    <button type="submit" class="botao">Adicionar ao Carrinho</button>
+  </form>
+
+  <!-- Formulário para Combo Labubônico -->
+  <form class="formulario-item" method="GET" action="carrinho-confirmacao.html">
+    <h3>Combo Labubônico</h3>
+    <img src="labubu.jpeg" alt="Combo Labubônico" style="width: 150px; border-radius: 10px;">
+    <div class="descricao-produto">
+      Hambúrguer artesanal + Batata média + Coca-Cola temática + Brinde Labubu
+    </div>
+    <div class="preco-destaque">R$ 90,00</div>
+    
+    <div class="campo-quantidade">
+      <label>Quantidade: 
+        <input type="number" name="quantidade_labubu" min="1" max="10" value="1">
+      </label>
+    </div>
+    
+    <input type="hidden" name="produto" value="Combo Labubônico">
+    <input type="hidden" name="preco" value="90.00">
+    <button type="submit" class="botao">Adicionar ao Carrinho</button>
+  </form>
+
+  <!-- Formulário para Combo Boobie Goods -->
+  <form class="formulario-item" method="GET" action="carrinho-confirmacao.html">
+    <h3>Combo Boobie Goods</h3>
+    <img src="bobie gods.jpeg" alt="Combo Boobie Goods" style="width: 150px; border-radius: 10px;">
+    <div class="descricao-produto">
+      Burger Artesanal + Batata média + Coca-Cola temática + Kit 12 canetas coloridas
+    </div>
+    <div class="preco-destaque">R$ 75,90</div>
+    
+    <div class="campo-quantidade">
+      <label>Quantidade: 
+        <input type="number" name="quantidade_boobie" min="1" max="10" value="1">
+      </label>
+    </div>
+    
+    <input type="hidden" name="produto" value="Combo Boobie Goods">
+    <input type="hidden" name="preco" value="75.90">
+    <button type="submit" class="botao">Adicionar ao Carrinho</button>
+  </form>
+
+  <!-- Formulário para Morango do Amor -->
+  <form class="formulario-item" method="GET" action="carrinho-confirmacao.html">
+    <h3>Morango do Amor</h3>
+    <img src="morango.jpeg" alt="Morango do Amor" style="width: 150px; border-radius: 10px;">
+    <div class="descricao-produto">
+      Delicioso morango coberto com chocolate e confeitos
+    </div>
+    <div class="preco-destaque">R$ 40,00</div>
+    
+    <div class="campo-quantidade">
+      <label>Quantidade: 
+        <input type="number" name="quantidade_morango" min="1" max="10" value="1">
+      </label>
+    </div>
+    
+    <input type="hidden" name="produto" value="Morango do Amor">
+    <input type="hidden" name="preco" value="40.00">
+    <button type="submit" class="botao">Adicionar ao Carrinho</button>
+  </form>
+
+  <!-- Formulário para Refrigerante -->
+  <form class="formulario-item" method="GET" action="carrinho-confirmacao.html">
+    <h3>Refrigerante 350ml</h3>
+    <img src="refri.jpeg" alt="Refrigerante" style="width: 150px; border-radius: 10px;">
+    <div class="descricao-produto">
+      Refrigerante geladinho em diversos sabores temáticos
+    </div>
+    <div class="preco-destaque">R$ 8,90</div>
+    
+    <div class="campo-quantidade">
+      <label>Tipo: 
+        <select name="tipo_refri">
+          <option value="Coca Labubu">Coca Labubu</option>
+          <option value="Coca Boobie">Coca Boobie Goods</option>
+          <option value="Coca Virgínia">Coca Virgínia</option>
+        </select>
+      </label>
+      <label>Quantidade: 
+        <input type="number" name="quantidade_refri" min="1" max="10" value="1">
+      </label>
+    </div>
+    
+    <input type="hidden" name="produto" value="Refrigerante 350ml">
+    <input type="hidden" name="preco" value="8.90">
+    <button type="submit" class="botao">Adicionar ao Carrinho</button>
+  </form>
+
+  <!-- Área de finalização -->
+  <div class="total-container">
+    <h3>Como funciona:</h3>
+    <p>1. Escolha a quantidade desejada de cada produto</p>
+    <p>2. Clique em "Adicionar ao Carrinho"</p>
+    <p>3. Será redirecionado para confirmar seu pedido</p>
+    <p>4. Finalize via WhatsApp ou telefone</p>
+  </div>
+
+  <!-- Botões de navegação -->
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="labubônicos.html" class="botao">← Voltar ao Menu</a>
+    <a href="tel:+5582999999999" class="botao botao-finalizar" style="display: block; margin-top: 10px;">
+      📞 Ligar para Finalizar Pedido
+    </a>
+    <a href="https://wa.me/5582999999999?text=Olá! Gostaria de fazer um pedido." class="botao botao-finalizar" style="display: block; margin-top: 10px;">
+      💬 WhatsApp para Pedidos
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

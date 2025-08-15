@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Confirmação do Pedido - Alpha's Burgues</title>
+<style>
+body {
+  background-color: #fff5ec;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.container-confirmacao {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff0e0;
+  border: 2px solid #ffc285;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.icone-sucesso {
+  font-size: 48px;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.produto-adicionado {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  color: #155724;
+}
+
+.detalhes-produto {
+  text-align: left;
+  margin: 15px 0;
+}
+
+.total-item {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e65c00;
+  margin-top: 15px;
+}
+
+.botoes-acao {
+  margin-top: 30px;
+}
+
+.botao {
+  background-color: #ffc285;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 8px;
+  text-decoration: none;
+  display: inline-block;
+  color: black;
+  transition: background-color 0.3s;
+}
+
+.botao:hover {
+  background-color: #ffb95c;
+}
+
+.botao-whatsapp {
+  background-color: #25d366;
+  color: white;
+  font-weight: bold;
+}
+
+.botao-whatsapp:hover {
+  background-color: #1db954;
+}
+
+.botao-telefone {
+  background-color: #007bff;
+  color: white;
+}
+
+.botao-telefone:hover {
+  background-color: #0056b3;
+}
+
+.instrucoes {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  color: #856404;
+}
+
+@media (max-width: 600px) {
+  .container-confirmacao {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .botao {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container-confirmacao">
+  <div class="icone-sucesso">✅</div>
+  <h1 style="color: #e65c00;">Item Adicionado!</h1>
+  
+  <div class="produto-adicionado">
+    <h3>Produto selecionado:</h3>
+    <div class="detalhes-produto">
+      <!-- Os dados do produto serão mostrados aqui baseados na URL -->
+      <div id="info-produto">
+        <strong>Nome:</strong> <span id="nome-produto">-</span><br>
+        <strong>Quantidade:</strong> <span id="qtd-produto">-</span><br>
+        <strong>Preço unitário:</strong> R$ <span id="preco-unitario">-</span><br>
+        <div id="extras-produto"></div>
+      </div>
+    </div>
+    <div class="total-item">
+      <strong>Total deste item:</strong> R$ <span id="total-item">0,00</span>
+    </div>
+  </div>
+  
+  <div class="instrucoes">
+    <h4>📋 Próximos passos:</h4>
+    <p><strong>1.</strong> Adicione mais itens ou finalize seu pedido</p>
+    <p><strong>2.</strong> Entre em contato conosco via WhatsApp ou telefone</p>
+    <p><strong>3.</strong> Confirme seu endereço e forma de pagamento</p>
+    <p><strong>4.</strong> Aguarde seu pedido chegar! 🍔</p>
+  </div>
+  
+  <div class="botoes-acao">
+    <a href="labubônicos.html" class="botao">← Adicionar Mais Itens</a>
+    
+    <a id="botao-whatsapp" href="#" class="botao botao-whatsapp">
+      💬 Finalizar via WhatsApp
+    </a>
+    
+    <a href="tel:+5582999999999" class="botao botao-telefone">
+      📞 Ligar para Confirmar
+    </a>
+  </div>
+  
+  <p style="margin-top: 30px; color: #666; font-size: 14px;">
+    <strong>Alpha's Burgues</strong><br>
+    Funcionamento: 18h às 01h<br>
+    Delivery disponível!
+  </p>
+</div>
+
+<script>
+// Função simples para ler parâmetros da URL e exibir informações do produto
+function carregarInfoProduto() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const produto = urlParams.get('produto') || 'Produto não especificado';
+    const preco = parseFloat(urlParams.get('preco')) || 0;
+    const quantidade = parseInt(urlParams.get('quantidade_virginia') || 
+                                urlParams.get('quantidade_labubu') || 
+                                urlParams.get('quantidade_boobie') || 
+                                urlParams.get('quantidade_morango') || 
+                                urlParams.get('quantidade_refri')) || 1;
+    const tipoRefri = urlParams.get('tipo_refri');
+    
+    // Atualizar elementos na página
+    document.getElementById('nome-produto').textContent = produto;
+    document.getElementById('qtd-produto').textContent = quantidade;
+    document.getElementById('preco-unitario').textContent = preco.toFixed(2);
+    document.getElementById('total-item').textContent = (preco * quantidade).toFixed(2);
+    
+    // Mostrar extras se houver
+    if (tipoRefri) {
+        document.getElementById('extras-produto').innerHTML = 
+            '<strong>Tipo:</strong> ' + tipoRefri + '<br>';
+    }
+    
+    // Preparar mensagem do WhatsApp
+    const mensagemWhatsApp = encodeURIComponent(
+        `Olá! Gostaria de fazer um pedido:\n\n` +
+        `${produto}\n` +
+        `Quantidade: ${quantidade}\n` +
+        (tipoRefri ? `Tipo: ${tipoRefri}\n` : '') +
+        `Valor: R$ ${(preco * quantidade).toFixed(2)}\n\n` +
+        `Aguardo contato para confirmar endereço e forma de pagamento. Obrigado!`
+    );
+    
+    document.getElementById('botao-whatsapp').href = 
+        `https://wa.me/5582999999999?text=${mensagemWhatsApp}`;
+}
+
+// Carregar informações quando a página carrega
+window.onload = carregarInfoProduto;
+</script>
+
+</body>
+</html>
