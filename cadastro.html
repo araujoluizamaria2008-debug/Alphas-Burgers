@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário Básico</title>
+</head>
+<body>
+
+    <h2>Cadastro de Usuário</h2>
+
+    <form action="/submit-form" method="post">
+        <div>
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome_completo">
+        </div>
+        <div>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email_usuario">
+        </div>
+        <div>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha_usuario">
+        </div>
+        <div>
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade_usuario">
+        </div>
+        <button type="submit">Enviar Cadastro</button>
+    </form>
+        <script>
+      // validação em tempo real
+        document.getElementById('senha').addEventListener('input', function() {
+            const senha = this.value;
+            if (senha.length < 6 && senha.length > 0) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ffc285';
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email) && email.length > 0) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ffc285';
+            }
+        });
+</script>
+</body>
+</html>
