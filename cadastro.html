@@ -26,6 +26,26 @@
         </div>
         <button type="submit">Enviar Cadastro</button>
     </form>
+        <script>
+      // validação em tempo real
+        document.getElementById('senha').addEventListener('input', function() {
+            const senha = this.value;
+            if (senha.length < 6 && senha.length > 0) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ffc285';
+            }
+        });
 
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email) && email.length > 0) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ffc285';
+            }
+        });
+</script>
 </body>
 </html>
