@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tabela de Produtos</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                margin: 15px 0;
+                width: 60%;
+            }
+
+            th, td {
+                border: 1px solid #000;
+                padding: 8px;
+                text-align: center;
+                vertical-align: top;
+            }
+
+            .item {
+                margin: 3px 0;
+                padding: 2px;
+                border-bottom: 1px dotted #ccc;
+            }
+
+            .item:last-child {
+                border-bottom: none;
+            }
+            
+            button {
+                margin: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h2>Produtos</h2>
+        <p>A seguir os produtos da loja:</p>
+
+        <table id="tabela" border="1" cellspacing="0" cellpadding="5">
+            <thead>
+            <tr>
+                <th>
+                    Combos
+                    <br><button onclick="adicionarItem(0)" style="margin-top: 5px; font-size: 12px;">+ Combo</button>
+                </th>
+                <th>
+                    Doces
+                    <br><button onclick="adicionarItem(1)" style="margin-top: 5px; font-size: 12px;">+ Doce</button>
+                </th>
+                <th>
+                    Refrigerantes
+                    <br><button onclick="adicionarItem(2)" style="margin-top: 5px; font-size: 12px;">+ Refrigerante</button>
+                </th> 
+                <th>Ações</th>           
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo boobie goods</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">milkshake de pistache</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca labubu</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo labubonico</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">morango do amor</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca boobie goods</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo virginia</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">duo pistache</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca virginia</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="adicionarLinha()">Adicionar Linha</button>
+
+        <script>
+            function adicionarLinha() {
+                const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+                const novaLinha = tabela.insertRow();
+            
+                for (let i = 0; i < 3; i++){
+                    let celula = novaLinha.insertCell(i);
+                    celula.innerHTML = `
+                        <div class="item">
+                            <span contenteditable="true">Novo item</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    `;
+                }
+
+                let celulaAcao = novaLinha.insertCell(3);
+                celulaAcao.innerHTML = '<button onclick="removerLinha(this)">Remover Linha</button>';
+            }
+
+            function adicionarItem(coluna) {
+                const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+                const linhas = tabela.getElementsByTagName("tr");
+                
+                // Encontra a primeira linha que tem espaço na coluna especificada ou cria uma nova linha
+                let linhaParaAdicionar = null;
+                
+                for (let i = 0; i < linhas.length; i++) {
+                    const celula = linhas[i].cells[coluna];
+                    const spans = celula.getElementsByTagName("span");
+                    
+                    // Verifica se há algum span vazio na célula
+                    for (let j = 0; j < spans.length; j++) {
+                        if (spans[j].innerText.trim() === "") {
+                            spans[j].innerText = getNovoItemTexto(coluna);
+                            return; // Item adicionado em espaço vazio existente
+                        }
+                    }
+                }
+                
+                // Se não encontrou espaço vazio, adiciona à primeira linha
+                if (linhas.length > 0) {
+                    linhaParaAdicionar = linhas[0];
+                } else {
+                    // Se não há linhas, cria uma nova
+                    adicionarLinha();
+                    linhaParaAdicionar = tabela.getElementsByTagName("tr")[0];
+                }
+                
+                // Adiciona o novo item à célula
+                const celula = linhaParaAdicionar.cells[coluna];
+                const novoItem = document.createElement("div");
+                novoItem.className = "item";
+                novoItem.innerHTML = `
+                    <span contenteditable="true">${getNovoItemTexto(coluna)}</span>
+                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                `;
+                celula.appendChild(novoItem);
+            }
+
+            function getNovoItemTexto(coluna) {
+                const textos = [
+                    "Novo combo",
+                    "Novo doce", 
+                    "Novo refrigerante"
+                ];
+                return textos[coluna];
+            }
+
+            function removerLinha(botao) {
+                const linha = botao.closest("tr"); // pega a linha do botao 
+                linha.remove(); // remove a linha inteira
+            }
+
+            function removerItem(botao) {
+                const itemDiv = botao.parentElement; // pega a div do item
+                itemDiv.remove(); // remove o item inteiro
+            }
+        </script>
+    
+    </body>
+</html>

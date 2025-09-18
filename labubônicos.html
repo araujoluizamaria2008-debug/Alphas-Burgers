@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Alpha's Burgues 🍔✨</title>
   <style>
-    /* Botão flutuante do carrinho */
+   /* Botão flutuante do carrinho */
     .carrinho-flutuante {
       position: fixed;
       bottom: 30px;
@@ -55,6 +55,41 @@
       border: 2px solid white;
     }
 
+    /* Botão de Login/Cadastro */
+    .usuario-info {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .botao-usuario {
+      background: linear-gradient(45deg, #dc3545, #dc8787);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .botao-usuario:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+
+    .usuario-logado {
+      background: linear-gradient(45deg, #6c757d, #868e96);
+      padding: 8px 12px;
+      border-radius: 20px;
+      color: white;
+      font-size: 14px;
+    }
+
     /* Responsivo */
     @media (max-width: 768px) {
       .carrinho-flutuante {
@@ -70,10 +105,27 @@
         height: 22px;
         font-size: 11px;
       }
+      .usuario-info {
+        top: 10px;
+        right: 10px;
+      }
+
+      .botao-usuario {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
     }
+  
   </style>
 </head>
 <body style="background-color: #fff5ec; font-family: Arial, sans-serif;">
+
+  <!-- Informações do Usuário -->
+  <div class="usuario-info" id="usuario-info">
+    <a href="cadastro.html" class="botao-usuario" id="link-usuario">
+      👤 Cadastre-se
+    </a>
+  </div>
 
   <header style="background-color: #ffcf96; text-align: center; padding: 10px;">
     <img src="logo.jpeg" width="220" height="150" alt="Logo Alpha's Burgues" />
@@ -192,43 +244,125 @@
   </footer>
 
   <script>
-    // Função para atualizar o contador do carrinho
-    function atualizarContadorCarrinho() {
+    // Sistema de carrinho
+    let carrinho = [];
+
+    // Função para adicionar item ao carrinho
+    function adicionarAoCarrinho(nome, preco) {
+      const itemExistente = carrinho.find(item => item.nome === nome);
+      
+      if (itemExistente) {
+        itemExistente.quantidade += 1;
+      } else {
+        carrinho.push({
+          nome: nome,
+          preco: preco,
+          quantidade: 1
+        });
+      }
+      
+      salvarCarrinho();
+      atualizarContadorCarrinho();
+      
+      // Feedback visual
+      const botaoCarrinho = document.getElementById('botao-carrinho');
+      botaoCarrinho.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        botaoCarrinho.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Função para salvar carrinho no sessionStorage
+    function salvarCarrinho() {
       try {
-        // Tenta ler do sessionStorage
-        const carrinhoSalvo = sessionStorage.getItem('alphas_carrinho');
-        let totalItens = 0;
-        
-        if (carrinhoSalvo) {
-          const carrinho = JSON.parse(carrinhoSalvo);
-          totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
-        }
-        
-        const contador = document.getElementById('contador-carrinho');
-        if (contador) {
-          contador.textContent = totalItens;
-          contador.style.display = totalItens > 0 ? 'flex' : 'none';
-        }
+        sessionStorage.setItem('alphas_carrinho', JSON.stringify(carrinho));
       } catch (e) {
-        // Se houver erro, mantém contador em 0
-        const contador = document.getElementById('contador-carrinho');
-        if (contador) {
-          contador.textContent = '0';
-          contador.style.display = 'none';
-        }
+        console.error('Erro ao salvar carrinho:', e);
       }
     }
 
-    // Atualiza o contador quando a página carrega
+    // Função para carregar carrinho do sessionStorage
+    function carregarCarrinho() {
+      try {
+        const carrinhoSalvo = sessionStorage.getItem('alphas_carrinho');
+        if (carrinhoSalvo) {
+          carrinho = JSON.parse(carrinhoSalvo);
+        }
+      } catch (e) {
+        console.error('Erro ao carregar carrinho:', e);
+        carrinho = [];
+      }
+    }
+
+    // Função para atualizar o contador do carrinho
+    function atualizarContadorCarrinho() {
+      const totalItens = carrinho.reduce((total, item) => total + item.quantidade, 0);
+      const contador = document.getElementById('contador-carrinho');
+      if (contador) {
+        contador.textContent = totalItens;
+        contador.style.display = totalItens > 0 ? 'flex' : 'none';
+      }
+    }
+
+    // Função para abrir carrinho (mock)
+    function abrirCarrinho() {
+      if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio! Adicione alguns itens deliciosos 🍔');
+        return;
+      }
+      
+      let resumo = 'Seus pedidos:\n\n';
+      let total = 0;
+      
+      carrinho.forEach(item => {
+        resumo += `${item.nome} x${item.quantidade} - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+        total += item.preco * item.quantidade;
+      });
+      
+      resumo += `\nTotal: R$ ${total.toFixed(2)}`;
+      
+      alert(resumo);
+    }
+
+    // Sistema de usuário
+    function verificarUsuario() {
+      try {
+        const usuarioSalvo = sessionStorage.getItem('alphas_usuario');
+        const linkUsuario = document.getElementById('link-usuario');
+        
+        if (usuarioSalvo) {
+          const usuario = JSON.parse(usuarioSalvo);
+          linkUsuario.innerHTML = `👤 Olá, ${usuario.nome_completo.split(' ')[0]}`;
+          linkUsuario.className = 'usuario-logado';
+          linkUsuario.href = '#';
+          linkUsuario.onclick = function() {
+            if (confirm('Deseja sair da sua conta?')) {
+              sessionStorage.removeItem('alphas_usuario');
+              location.reload();
+            }
+          };
+        }
+      } catch (e) {
+        console.error('Erro ao verificar usuário:', e);
+      }
+    }
+
+    // Inicialização
     window.onload = function() {
+      carregarCarrinho();
       atualizarContadorCarrinho();
+      verificarUsuario();
     };
 
-    // Atualiza o contador periodicamente (caso o usuário tenha múltiplas abas abertas)
+    // Atualiza o contador periodicamente
     setInterval(atualizarContadorCarrinho, 1000);
 
-    // Escuta mudanças no sessionStorage (funciona entre abas)
-    window.addEventListener('storage', atualizarContadorCarrinho);
+    // Escuta mudanças no sessionStorage
+    window.addEventListener('storage', function() {
+      carregarCarrinho();
+      atualizarContadorCarrinho();
+      verificarUsuario();
+    });
   </script>
 </body>
 </html>
