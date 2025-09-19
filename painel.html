@@ -1,7 +1,239 @@
- <!DOCTYPE html>
-        <html lang="pt-BR">
-    <head>
-        <body style="background-color: #ffe8d4; font-family: Arial, sans-serif;">
-    <header style="background-color: #ffcf96; text-align: center; padding: 10px;">
-    <img src="logo.jpeg" width="200" height="150" alt="Logo Alpha's Burgues" />
-    <h1>🍔✨ Alpha's Burgues</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Alpha's Burgues</title>
+    <style>
+        body {
+            background-color: #ffe8d4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcf96;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Estilos da tabela */
+        table {
+            border-collapse: collapse;
+            margin: 15px 0;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .item {
+            margin: 3px 0;
+            padding: 2px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpeg" width="200" height="150" alt="Logo Alpha's Burgues" />
+        <h1>🍔✨ Alpha's Burgues</h1>
+    </header>
+
+    <div style="padding: 20px;">
+        <h2>Produtos</h2>
+        <p>A seguir os produtos da loja:</p>
+
+        <table id="tabela" border="1" cellspacing="0" cellpadding="5">
+            <thead>
+            <tr>
+                <th>
+                    Combos
+                    <br><button onclick="adicionarItem(0)" style="margin-top: 5px; font-size: 12px;">+ Combo</button>
+                </th>
+                <th>
+                    Doces
+                    <br><button onclick="adicionarItem(1)" style="margin-top: 5px; font-size: 12px;">+ Doce</button>
+                </th>
+                <th>
+                    Refrigerantes
+                    <br><button onclick="adicionarItem(2)" style="margin-top: 5px; font-size: 12px;">+ Refrigerante</button>
+                </th> 
+                <th>Ações</th>           
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo boobie goods</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">milkshake de pistache</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca labubu</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo labubonico</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">morango do amor</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca boobie goods</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">combo virginia</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">duo pistache</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item">
+                            <span contenteditable="true">coca virginia</span>
+                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                        </div>
+                    </td>
+                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="adicionarLinha()">Adicionar Linha</button>
+    </div>
+
+    <script>
+        // Funções da tabela de produtos
+        function adicionarLinha() {
+            const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+            const novaLinha = tabela.insertRow();
+        
+            for (let i = 0; i < 3; i++){
+                let celula = novaLinha.insertCell(i);
+                celula.innerHTML = `
+                    <div class="item">
+                        <span contenteditable="true">Novo item</span>
+                        <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                    </div>
+                `;
+            }
+
+            let celulaAcao = novaLinha.insertCell(3);
+            celulaAcao.innerHTML = '<button onclick="removerLinha(this)">Remover Linha</button>';
+        }
+
+        function adicionarItem(coluna) {
+            const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+            const linhas = tabela.getElementsByTagName("tr");
+            
+            // Encontra a primeira linha que tem espaço na coluna especificada ou cria uma nova linha
+            let linhaParaAdicionar = null;
+            
+            for (let i = 0; i < linhas.length; i++) {
+                const celula = linhas[i].cells[coluna];
+                const spans = celula.getElementsByTagName("span");
+                
+                // Verifica se há algum span vazio na célula
+                for (let j = 0; j < spans.length; j++) {
+                    if (spans[j].innerText.trim() === "") {
+                        spans[j].innerText = getNovoItemTexto(coluna);
+                        return; // Item adicionado em espaço vazio existente
+                    }
+                }
+            }
+            
+            // adiciona à primeira linha
+            if (linhas.length > 0) {
+                linhaParaAdicionar = linhas[0];
+            } else {
+                // cria uma nova linha
+                adicionarLinha();
+                linhaParaAdicionar = tabela.getElementsByTagName("tr")[0];
+            }
+            
+            // Adiciona o novo item 
+            const celula = linhaParaAdicionar.cells[coluna];
+            const novoItem = document.createElement("div");
+            novoItem.className = "item";
+            novoItem.innerHTML = `
+                <span contenteditable="true">${getNovoItemTexto(coluna)}</span>
+                <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+            `;
+            celula.appendChild(novoItem);
+        }
+
+        function getNovoItemTexto(coluna) {
+            const textos = [
+                "Novo combo",
+                "Novo doce", 
+                "Novo refrigerante"
+            ];
+            return textos[coluna];
+        }
+
+        function removerLinha(botao) {
+            const linha = botao.closest("tr"); // pega a linha do botao 
+            linha.remove(); // remove a linha inteira
+        }
+
+        function removerItem(botao) {
+            const itemDiv = botao.parentElement; // pega a div do item
+            itemDiv.remove(); // remove o item inteiro
+        }
+    </script>
+    <footer style="background-color: #ffcf96; text-align: center; padding: 10px;">
+    <p>Alpha's Burgues © 2025</p>
+  </footer>
+</body>
+</html>

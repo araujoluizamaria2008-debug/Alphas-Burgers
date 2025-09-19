@@ -567,8 +567,6 @@ class CarrinhoManager {
       
       document.getElementById('loading').style.display = 'none';
       window.open(whatsappURL, '_blank');
-      // Registra o pedido finalizado para o painel admin
-      sessionStorage.setItem('alphas_pedidos_finalizados', JSON.stringify(this.carrinho));
     }, 1000);
   }
 }
