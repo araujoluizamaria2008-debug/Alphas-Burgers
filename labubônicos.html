@@ -55,41 +55,6 @@
       border: 2px solid white;
     }
 
-    /* Botão de Login/Cadastro */
-    .usuario-info {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
-    .botao-usuario {
-      background: linear-gradient(45deg, #dc3545, #dc8787);
-      color: white;
-      padding: 10px 15px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-    }
-
-    .botao-usuario:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    }
-
-    .usuario-logado {
-      background: linear-gradient(45deg, #6c757d, #868e96);
-      padding: 8px 12px;
-      border-radius: 20px;
-      color: white;
-      font-size: 14px;
-    }
-
     /* Responsivo */
     @media (max-width: 768px) {
       .carrinho-flutuante {
@@ -105,27 +70,12 @@
         height: 22px;
         font-size: 11px;
       }
-      .usuario-info {
-        top: 10px;
-        right: 10px;
-      }
 
-      .botao-usuario {
-        padding: 8px 12px;
-        font-size: 14px;
-      }
     }
   
   </style>
 </head>
 <body style="background-color: #fff5ec; font-family: Arial, sans-serif;">
-
-  <!-- Informações do Usuário -->
-  <div class="usuario-info" id="usuario-info">
-    <a href="cadastro.html" class="botao-usuario" id="link-usuario">
-      👤 Cadastre-se
-    </a>
-  </div>
 
   <header style="background-color: #ffcf96; text-align: center; padding: 10px;">
     <img src="logo.jpeg" width="220" height="150" alt="Logo Alpha's Burgues" />
