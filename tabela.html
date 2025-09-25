@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Tabela de Produtos</title>
+        <title>Sistema de Produtos e Preços</title>
         <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f5f5f5;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 30px;
+            }
+
+            h2 {
+                color: #555;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 10px;
+                margin-top: 40px;
+            }
+
+            .tabela-section {
+                margin: 30px 0;
+            }
+
             table {
                 border-collapse: collapse;
                 margin: 15px 0;
-                width: 60%;
+                width: 100%;
+                background-color: white;
             }
 
             th, td {
@@ -14,6 +47,11 @@
                 padding: 8px;
                 text-align: center;
                 vertical-align: top;
+            }
+
+            th {
+                background-color: #f0f0f0;
+                font-weight: bold;
             }
 
             .item {
@@ -30,126 +68,559 @@
                 margin: 5px;
                 padding: 5px 10px;
                 cursor: pointer;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #f9f9f9;
+            }
+
+            button:hover {
+                background-color: #e9e9e9;
+            }
+
+            .btn-adicionar-linha {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                margin: 10px 5px;
+                border: none;
+                border-radius: 5px;
+            }
+
+            .btn-adicionar-linha:hover {
+                background-color: #45a049;
+            }
+
+            .preco {
+                color: #007f00;
+                font-weight: bold;
+            }
+
+            .promocao {
+                color: #ff4500;
+                font-weight: bold;
+            }
+
+            .navegacao {
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .nav-button {
+                background-color: #2196F3;
+                color: white;
+                padding: 10px 20px;
+                margin: 0 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .nav-button:hover {
+                background-color: #1976D2;
+            }
+
+            .nav-button.active {
+                background-color: #1976D2;
+            }
+
+            .tabela-produtos, .tabela-precos {
+                display: none;
+            }
+
+            .tabela-produtos.active, .tabela-precos.active {
+                display: block;
             }
         </style>
     </head>
     <body>
 
-        <h2>Produtos</h2>
-        <p>A seguir os produtos da loja:</p>
+        <div class="container">
+            <h1>Sistema de Gerenciamento da Loja</h1>
+            
+            <div class="navegacao">
+                <button class="nav-button active" onclick="mostrarTabela('produtos')">Tabela de Produtos</button>
+                <button class="nav-button" onclick="mostrarTabela('precos')">Tabela de Preços</button>
+            </div>
 
-        <table id="tabela" border="1" cellspacing="0" cellpadding="5">
-            <thead>
-            <tr>
-                <th>
-                    Combos
-                    <br><button onclick="adicionarItem(0)" style="margin-top: 5px; font-size: 12px;">+ Combo</button>
-                </th>
-                <th>
-                    Doces
-                    <br><button onclick="adicionarItem(1)" style="margin-top: 5px; font-size: 12px;">+ Doce</button>
-                </th>
-                <th>
-                    Refrigerantes
-                    <br><button onclick="adicionarItem(2)" style="margin-top: 5px; font-size: 12px;">+ Refrigerante</button>
-                </th> 
-                <th>Ações</th>           
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">combo boobie goods</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">milkshake de pistache</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">coca labubu</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">combo labubonico</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">morango do amor</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">coca boobie goods</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">combo virginia</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">duo pistache</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="item">
-                            <span contenteditable="true">coca virginia</span>
-                            <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
-                        </div>
-                    </td>
-                    <td><button onclick="removerLinha(this)">Remover Linha</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button onclick="adicionarLinha()">Adicionar Linha</button>
+            <!-- TABELA DE PRODUTOS -->
+            <div class="tabela-section tabela-produtos active">
+                <h2>Produtos</h2>
+                <p>A seguir os produtos da loja:</p>
+
+                <table id="tabelaProdutos" border="1" cellspacing="0" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <th>
+                            Combos
+                            <br><button onclick="adicionarItem('produtos', 0)" style="margin-top: 5px; font-size: 12px;">+ Combo</button>
+                        </th>
+                        <th>
+                            Doces
+                            <br><button onclick="adicionarItem('produtos', 1)" style="margin-top: 5px; font-size: 12px;">+ Doce</button>
+                        </th>
+                        <th>
+                            Refrigerantes
+                            <br><button onclick="adicionarItem('produtos', 2)" style="margin-top: 5px; font-size: 12px;">+ Refrigerante</button>
+                        </th> 
+                        <th>Ações</th>           
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo boobie goods</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">milkshake de pistache</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca labubu</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('produtos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo labubonico</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">morango do amor</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca boobie goods</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('produtos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo virginia</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">duo pistache</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca virginia</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('produtos', this)">Remover Linha</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn-adicionar-linha" onclick="adicionarLinha('produtos')">Adicionar Linha</button>
+            </div>
+
+            <!-- TABELA DE PREÇOS -->
+            <div class="tabela-section tabela-precos">
+                <h2>Preços</h2>
+                <p>A seguir a tabela de preços específicos dos produtos:</p>
+
+                <table id="tabelaPrecos" border="1" cellspacing="0" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <th>
+                            Produto
+                            <br><button onclick="adicionarItem('precos', 0)" style="margin-top: 5px; font-size: 12px;">+ Produto</button>
+                        </th>
+                        <th>
+                            Preço Normal
+                            <br><button onclick="adicionarItem('precos', 1)" style="margin-top: 5px; font-size: 12px;">+ Preço</button>
+                        </th>
+                        <th>
+                            Promoção
+                            <br><button onclick="adicionarItem('precos', 2)" style="margin-top: 5px; font-size: 12px;">+ Promoção</button>
+                        </th>
+                        <th>
+                            Desconto %
+                            <br><button onclick="adicionarItem('precos', 3)" style="margin-top: 5px; font-size: 12px;">+ Desconto</button>
+                        </th>
+                        <th>
+                            Categoria
+                            <br><button onclick="adicionarItem('precos', 4)" style="margin-top: 5px; font-size: 12px;">+ Categoria</button>
+                        </th> 
+                        <th>Ações</th>           
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <!-- COMBOS -->
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo boobie goods</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 75,90</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 60,72</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">20%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Combos</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo labubonico</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 90,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 74,70</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">17%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Combos</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">combo virginia</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 200,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 154,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">23%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Combos</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <!-- DOCES -->
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">milkshake de pistache</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 45,90</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 41,21</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">10%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Doces</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">morango do amor</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 40,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 39,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">15%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Doces</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">duo pistache</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 60,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 48,00</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">20%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Doces</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <!-- REFRIGERANTES -->
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca labubu</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 16,90</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 14,50</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">15%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Refrigerantes</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca boobie goods</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 16,90</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 14,50</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">15%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Refrigerantes</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">coca virginia</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="preco">R$ 16,90</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true" class="promocao">R$ 14,50</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">15%</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item">
+                                    <span contenteditable="true">Refrigerantes</span>
+                                    <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
+                                </div>
+                            </td>
+                            <td><button onclick="removerLinha('precos', this)">Remover Linha</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn-adicionar-linha" onclick="adicionarLinha('precos')">Adicionar Linha</button>
+            </div>
+        </div>
 
         <script>
-            function adicionarLinha() {
-                const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+            function mostrarTabela(tipo) {
+                // Remove classe active de todos os elementos
+                document.querySelectorAll('.tabela-produtos, .tabela-precos').forEach(el => {
+                    el.classList.remove('active');
+                });
+                document.querySelectorAll('.nav-button').forEach(el => {
+                    el.classList.remove('active');
+                });
+
+                // Adiciona classe active ao elemento selecionado
+                if (tipo === 'produtos') {
+                    document.querySelector('.tabela-produtos').classList.add('active');
+                    document.querySelector('.nav-button:first-child').classList.add('active');
+                } else {
+                    document.querySelector('.tabela-precos').classList.add('active');
+                    document.querySelector('.nav-button:last-child').classList.add('active');
+                }
+            }
+
+            function adicionarLinha(tipoTabela) {
+                const tabelaId = tipoTabela === 'produtos' ? 'tabelaProdutos' : 'tabelaPrecos';
+                const tabela = document.getElementById(tabelaId).getElementsByTagName("tbody")[0];
                 const novaLinha = tabela.insertRow();
+                
+                const numColunas = tipoTabela === 'produtos' ? 3 : 5;
             
-                for (let i = 0; i < 3; i++){
+                for (let i = 0; i < numColunas; i++){
                     let celula = novaLinha.insertCell(i);
                     celula.innerHTML = `
                         <div class="item">
-                            <span contenteditable="true">Novo item</span>
+                            <span contenteditable="true" class="${getClasseTexto(tipoTabela, i)}">${getNovoItemTexto(tipoTabela, i)}</span>
                             <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
                         </div>
                     `;
                 }
 
-                let celulaAcao = novaLinha.insertCell(3);
-                celulaAcao.innerHTML = '<button onclick="removerLinha(this)">Remover Linha</button>';
+                let celulaAcao = novaLinha.insertCell(numColunas);
+                celulaAcao.innerHTML = `<button onclick="removerLinha('${tipoTabela}', this)">Remover Linha</button>`;
             }
 
-            function adicionarItem(coluna) {
-                const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+            function adicionarItem(tipoTabela, coluna) {
+                const tabelaId = tipoTabela === 'produtos' ? 'tabelaProdutos' : 'tabelaPrecos';
+                const tabela = document.getElementById(tabelaId).getElementsByTagName("tbody")[0];
                 const linhas = tabela.getElementsByTagName("tr");
                 
-                // Encontra a primeira linha que tem espaço na coluna especificada ou cria uma nova linha
-                let linhaParaAdicionar = null;
-                
+                // Encontra a primeira linha que tem espaço na coluna especificada
                 for (let i = 0; i < linhas.length; i++) {
                     const celula = linhas[i].cells[coluna];
                     const spans = celula.getElementsByTagName("span");
@@ -157,18 +628,19 @@
                     // Verifica se há algum span vazio na célula
                     for (let j = 0; j < spans.length; j++) {
                         if (spans[j].innerText.trim() === "") {
-                            spans[j].innerText = getNovoItemTexto(coluna);
-                            return; // Item adicionado em espaço vazio existente
+                            spans[j].innerText = getNovoItemTexto(tipoTabela, coluna);
+                            spans[j].className = getClasseTexto(tipoTabela, coluna);
+                            return;
                         }
                     }
                 }
                 
                 // Se não encontrou espaço vazio, adiciona à primeira linha
+                let linhaParaAdicionar;
                 if (linhas.length > 0) {
                     linhaParaAdicionar = linhas[0];
                 } else {
-                    // Se não há linhas, cria uma nova
-                    adicionarLinha();
+                    adicionarLinha(tipoTabela);
                     linhaParaAdicionar = tabela.getElementsByTagName("tr")[0];
                 }
                 
@@ -177,29 +649,39 @@
                 const novoItem = document.createElement("div");
                 novoItem.className = "item";
                 novoItem.innerHTML = `
-                    <span contenteditable="true">${getNovoItemTexto(coluna)}</span>
+                    <span contenteditable="true" class="${getClasseTexto(tipoTabela, coluna)}">${getNovoItemTexto(tipoTabela, coluna)}</span>
                     <button onclick="removerItem(this)" style="margin-left: 10px; font-size: 12px;">×</button>
                 `;
                 celula.appendChild(novoItem);
             }
 
-            function getNovoItemTexto(coluna) {
-                const textos = [
-                    "Novo combo",
-                    "Novo doce", 
-                    "Novo refrigerante"
-                ];
-                return textos[coluna];
+            function getNovoItemTexto(tipoTabela, coluna) {
+                if (tipoTabela === 'produtos') {
+                    const textos = ["Novo combo", "Novo doce", "Novo refrigerante"];
+                    return textos[coluna];
+                } else {
+                    const textos = ["Novo produto", "R$ 0,00", "R$ 0,00", "0%", "Nova categoria"];
+                    return textos[coluna];
+                }
             }
 
-            function removerLinha(botao) {
-                const linha = botao.closest("tr"); // pega a linha do botao 
-                linha.remove(); // remove a linha inteira
+            function getClasseTexto(tipoTabela, coluna) {
+                if (tipoTabela === 'produtos') {
+                    return "";
+                } else {
+                    const classes = ["", "preco", "promocao", "", ""];
+                    return classes[coluna];
+                }
+            }
+
+            function removerLinha(tipoTabela, botao) {
+                const linha = botao.closest("tr");
+                linha.remove();
             }
 
             function removerItem(botao) {
-                const itemDiv = botao.parentElement; // pega a div do item
-                itemDiv.remove(); // remove o item inteiro
+                const itemDiv = botao.parentElement;
+                itemDiv.remove();
             }
         </script>
     
