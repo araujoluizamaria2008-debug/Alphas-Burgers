@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <title>Alpha's Burgues 🍔✨</title>
   <style>
+
+    .usuario-logado {
+    background-color: #28a745 !important;
+}
+
+.usuario-logado:hover {
+    background-color: #218838 !important;
+}
+
    /* Botão flutuante do carrinho */
     .carrinho-flutuante {
       position: fixed;
@@ -86,7 +95,20 @@
       <a href="#combos" style="margin: 0 10px; text-decoration: none; color: #e65c00; font-weight: bold;">Combos</a>
       <a href="#bebidas" style="margin: 0 10px; text-decoration: none; color: #e65c00; font-weight: bold;">Bebidas</a>
       <a href="#doces" style="margin: 0 10px; text-decoration: none; color: #e65c00; font-weight: bold;">Doces</a>
+</div>
     </nav>
+    </nav>
+    
+    <!-- Botão de Usuário -->
+    <div style="text-align: center; margin: 15px 0; padding: 10px; background-color: #fff0e0; border-radius: 8px;">
+        <a href="usuario.html" id="link-usuario" class="usuario-deslogado" style="background-color: #e65c00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 5px; display: inline-block;">
+            👤 Fazer Login / Cadastrar
+        </a>
+        <button id="btn-logout" onclick="logout()" style="background-color: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; margin: 5px; cursor: pointer; display: none;">
+            🚪 Sair
+        </button>
+    </div>
+  </header>
   </header>
 
   <main style="padding: 20px;">
@@ -194,6 +216,136 @@
   </footer>
 
   <script>
+class SyncManager {
+    constructor() {
+        this.eventListeners = [];
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'alphas_produtos') {
+                this.handleDataChange(e.key, e.newValue);
+            }
+        });
+
+        window.addEventListener('alphas_data_changed', (e) => {
+            this.handleDataChange(e.detail.key, e.detail.value);
+        });
+    }
+
+    saveData(key, data) {
+        try {
+            const jsonData = JSON.stringify(data);
+            localStorage.setItem(key, jsonData);
+            
+            const event = new CustomEvent('alphas_data_changed', {
+                detail: { key: key, value: jsonData }
+            });
+            window.dispatchEvent(event);
+            
+            return true;
+        } catch (error) {
+            console.error('Erro ao salvar dados:', error);
+            return false;
+        }
+    }
+
+    loadData(key) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            return null;
+        }
+    }
+
+    handleDataChange(key, newValue) {
+        if (!newValue) return;
+
+        try {
+            const data = JSON.parse(newValue);
+            
+            if (key === 'alphas_produtos') {
+                this.updateMenuProducts(data);
+            }
+        } catch (error) {
+            console.error('Erro ao processar mudança de dados:', error);
+        }
+    }
+
+    updateMenuProducts(produtos) {
+        this.updateSection('combos', produtos.filter(p => p.categoria === 'combos'));
+        this.updateSection('doces', produtos.filter(p => p.categoria === 'doces')); 
+        this.updateSection('bebidas', produtos.filter(p => p.categoria === 'bebidas'));
+    }
+
+    updateSection(sectionId, produtos) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        // Remove produtos existentes mas mantem o título
+        const existingProducts = section.querySelectorAll('[style*="border: 2px solid #ffc285"]');
+        existingProducts.forEach(el => el.remove());
+
+        // Adiciona produtos atualizados
+        produtos.forEach(produto => {
+            const produtoDiv = document.createElement('div');
+            produtoDiv.style.cssText = 'border: 2px solid #ffc285; background-color: #fff0e0; border-radius: 10px; padding: 10px; margin: 15px;';
+            
+            const linkHref = this.getProductLink(produto.nome);
+            
+            produtoDiv.innerHTML = `
+                <a href="${linkHref}" style="text-decoration: none; color: inherit;">
+                    <h3>${produto.nome} - R$ ${produto.preco.toFixed(2)}</h3>
+                    ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" width="200" style="border-radius: 10px;" onerror="this.style.display='none'">` : ''}
+                    ${produto.descricao ? `<p style="margin: 10px 0; color: #666;">${produto.descricao}</p>` : ''}
+                </a>
+            `;
+            
+            section.appendChild(produtoDiv);
+        });
+    }
+
+    getProductLink(nomeProduto) {
+        const links = {
+            'Combo Virgínia': 'combo-virginia.html',
+            'Combo Labubônico': 'combo-labubonico.html', 
+            'Combo Boobie Goods': 'combo-boobie-goods.html',
+            'Morango do Amor': 'morango-do-amor.html',
+            'Waffles': 'waffles.html',
+            'Milkshake de Pistache': 'milkshake-pistache.html',
+            'Duo Pistachudo': 'duo-pistachudo.html',
+            'Refrigerante 350ml': 'refrigerante-350ml.html'
+        };
+        
+        return links[nomeProduto] || '#';
+    }
+
+    addOrder(carrinhoData, clienteData) {
+        const pedidos = this.loadData('alphas_pedidos') || [];
+        
+        const novoPedido = {
+            id: Date.now(),
+            cliente: clienteData ? clienteData.nome : 'Cliente Anônimo',
+            itens: carrinhoData.map(item => `${item.produto} (${item.quantidade}x)`).join(', '),
+            total: carrinhoData.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
+            status: 'pendente', 
+            dataHora: new Date().toLocaleString('pt-BR'),
+            detalhes: carrinhoData
+        };
+
+        pedidos.push(novoPedido);
+        this.saveData('alphas_pedidos', pedidos);
+
+        return novoPedido.id;
+    }
+}
+
+// Inicializar sistema
+const syncManager = new SyncManager();
+
     // Sistema de carrinho
     let carrinho = [];
 
@@ -276,34 +428,50 @@
 
     // Sistema de usuário
     function verificarUsuario() {
-      try {
+    try {
         const usuarioSalvo = sessionStorage.getItem('alphas_usuario');
         const linkUsuario = document.getElementById('link-usuario');
+        const btnLogout = document.getElementById('btn-logout');
         
         if (usuarioSalvo) {
-          const usuario = JSON.parse(usuarioSalvo);
-          linkUsuario.innerHTML = `👤 Olá, ${usuario.nome_completo.split(' ')[0]}`;
-          linkUsuario.className = 'usuario-logado';
-          linkUsuario.href = '#';
-          linkUsuario.onclick = function() {
-            if (confirm('Deseja sair da sua conta?')) {
-              sessionStorage.removeItem('alphas_usuario');
-              location.reload();
+            const usuario = JSON.parse(usuarioSalvo);
+            
+            // Verificar se o usuário ainda existe no sistema
+            const usuarios = JSON.parse(localStorage.getItem('alphas_usuarios') || '[]');
+            const usuarioExiste = usuarios.find(u => u.id === usuario.id && u.email === usuario.email);
+            
+            if (usuarioExiste) {
+                linkUsuario.innerHTML = `👤 Olá, ${usuario.nome.split(' ')[0]}`;
+                linkUsuario.className = 'usuario-logado';
+                linkUsuario.href = '#';
+                linkUsuario.onclick = function() {
+                    alert(`Perfil de ${usuario.nome}\nTipo: ${usuario.tipo === 'admin' ? 'Administrador' : 'Cliente'}\nEmail: ${usuario.email}`);
+                };
+                btnLogout.style.display = 'inline-block';
+            } else {
+                // Usuário foi removido do sistema, fazer logout
+                sessionStorage.removeItem('alphas_usuario');
+                resetarInterfaceUsuario();
             }
-          };
+        } else {
+            resetarInterfaceUsuario();
         }
-      } catch (e) {
+    } catch (e) {
         console.error('Erro ao verificar usuário:', e);
-      }
+        resetarInterfaceUsuario();
     }
+}
 
-    // Inicialização
-    window.onload = function() {
-      carregarCarrinho();
-      atualizarContadorCarrinho();
-      verificarUsuario();
-    };
-
+function resetarInterfaceUsuario() {
+    const linkUsuario = document.getElementById('link-usuario');
+    const btnLogout = document.getElementById('btn-logout');
+    
+    linkUsuario.innerHTML = '👤 Fazer Login / Cadastrar';
+    linkUsuario.href = 'usuario.html';
+    linkUsuario.className = 'usuario-deslogado';
+    linkUsuario.onclick = null;
+    btnLogout.style.display = 'none';
+}
     // Atualiza o contador periodicamente
     setInterval(atualizarContadorCarrinho, 1000);
 
@@ -313,6 +481,74 @@
       atualizarContadorCarrinho();
       verificarUsuario();
     });
+
+    // Sistema de usuário
+function verificarUsuario() {
+    try {
+        const usuarioSalvo = sessionStorage.getItem('alphas_usuario');
+        const linkUsuario = document.getElementById('link-usuario');
+        const btnLogout = document.getElementById('btn-logout');
+        
+        if (usuarioSalvo) {
+            const usuario = JSON.parse(usuarioSalvo);
+            linkUsuario.innerHTML = `👤 Olá, ${usuario.nome.split(' ')[0]}`;
+            linkUsuario.className = 'usuario-logado';
+            linkUsuario.href = '#';
+            linkUsuario.onclick = function() {
+                alert(`Perfil de ${usuario.nome}\nTipo: ${usuario.tipo === 'admin' ? 'Administrador' : 'Cliente'}\nEmail: ${usuario.email}`);
+            };
+            btnLogout.style.display = 'inline-block';
+        } else {
+            linkUsuario.innerHTML = '👤 Fazer Login / Cadastrar';
+            linkUsuario.href = 'usuario.html';
+            linkUsuario.onclick = null;
+            btnLogout.style.display = 'none';
+        }
+    } catch (e) {
+        console.error('Erro ao verificar usuário:', e);
+    }
+}
+
+function logout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        sessionStorage.removeItem('alphas_usuario');
+        alert('Logout realizado com sucesso!');
+        verificarUsuario();
+    }
+}// Sistema de usuário
+function verificarUsuario() {
+    try {
+        const usuarioSalvo = sessionStorage.getItem('alphas_usuario');
+        const linkUsuario = document.getElementById('link-usuario');
+        const btnLogout = document.getElementById('btn-logout');
+        
+        if (usuarioSalvo) {
+            const usuario = JSON.parse(usuarioSalvo);
+            linkUsuario.innerHTML = `👤 Olá, ${usuario.nome.split(' ')[0]}`;
+            linkUsuario.className = 'usuario-logado';
+            linkUsuario.href = '#';
+            linkUsuario.onclick = function() {
+                alert(`Perfil de ${usuario.nome}\nTipo: ${usuario.tipo === 'admin' ? 'Administrador' : 'Cliente'}\nEmail: ${usuario.email}`);
+            };
+            btnLogout.style.display = 'inline-block';
+        } else {
+            linkUsuario.innerHTML = '👤 Fazer Login / Cadastrar';
+            linkUsuario.href = 'usuario.html';
+            linkUsuario.onclick = null;
+            btnLogout.style.display = 'none';
+        }
+    } catch (e) {
+        console.error('Erro ao verificar usuário:', e);
+    }
+}
+
+function logout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        sessionStorage.removeItem('alphas_usuario');
+        alert('Logout realizado com sucesso!');
+        verificarUsuario();
+    }
+}
   </script>
 </body>
 </html>
