@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrativo - Alpha's Burgues</title>
+    <div class="back-link">
+            <a href="labubônicos.html">← Voltar ao Menu Principal</a>
+        </div>
     <style>
         body {
             background-color: #ffe8d4;
@@ -319,17 +322,6 @@
                     <div class="stat-label">Produto Mais Vendido</div>
                 </div>
             </div>
-
-            <div class="form-section">
-                <h3>📈 Vendas Recentes</h3>
-                <div id="vendas-recentes">
-                    <p>• Combo Labubônico - R$ 90,00 - há 15 min</p>
-                    <p>• Morango do Amor - R$ 40,00 - há 32 min</p>
-                    <p>• Combo Boobie Goods - R$ 75,90 - há 1h</p>
-                    <p>• Milkshake Pistache - R$ 25,00 - há 1h 15min</p>
-                </div>
-            </div>
-        </div>
 
         <!-- Produtos -->
         <div id="produtos" class="tab-content">
@@ -659,22 +651,6 @@ class SyncManager {
 
         // Pedidos estáticos + novos pedidos
         const todosOsPedidos = [
-            {
-                id: 1,
-                cliente: "João Silva",
-                itens: "Combo Virgínia (1x), Coca Virgínia (1x)",
-                total: 216.90,
-                status: "pendente",
-                dataHora: "25/09/2025 19:30"
-            },
-            {
-                id: 2,
-                cliente: "Maria Santos", 
-                itens: "Morango do Amor (2x), Milkshake (1x)",
-                total: 105.00,
-                status: "preparando",
-                dataHora: "25/09/2025 19:15"
-            },
             ...pedidos
         ];
 
