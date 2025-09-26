@@ -1,119 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<<<<<<< HEAD
-  <meta charset="UTF-8">
-  <title>Painel Administrativo - Alpha's Burgues</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #fff5ec; padding: 20px; }
-    h1 { color: #e65c00; }
-    form { background: #fff0e0; padding: 15px; border: 2px solid #ffc285; border-radius: 10px; margin-bottom: 20px; }
-    label { display: block; margin: 10px 0 5px; }
-    input, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
-    button { background: #e65c00; color: white; padding: 10px; border: none; border-radius: 8px; cursor: pointer; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ffc285; padding: 10px; text-align: left; }
-    th { background: #ffe2c7; }
-  </style>
-</head>
-<body>
-  <h1>📦 Painel Administrativo</h1>
-
-  <!-- Formulário de Cadastro -->
-  <form id="formProduto">
-    <h2>Cadastro do Produto</h2>
-    <input type="hidden" id="editIndex">
-    <label>Nome:</label>
-    <input type="text" id="nome" required>
-    <label>Preço:</label>
-    <input type="number" id="preco" required step="0.01">
-    <label>Descrição:</label>
-    <textarea id="descricao"></textarea>
-    <label>Imagem (URL):</label>
-    <input type="text" id="imagem">
-    <button type="submit">Salvar Produto</button>
-  </form>
-
-  <!-- Lista de Produtos -->
-  <h2>Produtos Cadastrados</h2>
-  <table>
-    <thead>
-      <tr><th>Nome</th><th>Preço</th><th>Descrição</th><th>Ações</th></tr>
-    </thead>
-    <tbody id="listaProdutos"></tbody>
-  </table>
-
-  <script>
-    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-
-    function atualizarTabela() {
-      const lista = document.getElementById("listaProdutos");
-      lista.innerHTML = "";
-      produtos.forEach((p, i) => {
-        lista.innerHTML += `
-          <tr>
-            <td>${p.nome}</td>
-            <td>R$ ${p.preco.toFixed(2)}</td>
-            <td>${p.descricao}</td>
-            <td>
-              <button onclick="editarProduto(${i})">✏️ Editar</button>
-              <button onclick="removerProduto(${i})">🗑️ Remover</button>
-            </td>
-          </tr>`;
-      });
-      localStorage.setItem("produtos", JSON.stringify(produtos));
-    }
-
-    document.getElementById("formProduto").onsubmit = function(e) {
-      e.preventDefault();
-      const nome = document.getElementById("nome").value;
-      const preco = parseFloat(document.getElementById("preco").value);
-      const descricao = document.getElementById("descricao").value;
-      const imagem = document.getElementById("imagem").value;
-      const editIndex = document.getElementById("editIndex").value;
-
-      if (editIndex === "") {
-        produtos.push({ nome, preco, descricao, imagem });
-      } else {
-        produtos[editIndex] = { nome, preco, descricao, imagem };
-        document.getElementById("editIndex").value = "";
-      }
-
-      this.reset();
-      atualizarTabela();
-    };
-
-    function editarProduto(i) {
-      const p = produtos[i];
-      document.getElementById("nome").value = p.nome;
-      document.getElementById("preco").value = p.preco;
-      document.getElementById("descricao").value = p.descricao;
-      document.getElementById("imagem").value = p.imagem;
-      document.getElementById("editIndex").value = i;
-    }
-
-    function removerProduto(i) {
-      if (confirm("Remover este produto?")) {
-        produtos.splice(i, 1);
-        atualizarTabela();
-      }
-    }
-
-    atualizarTabela();
-  </script>
-=======
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrativo - Alpha's Burgues</title>
-    <div class="back-link">
-            <a href="labubônicos.html">← Voltar ao Menu Principal</a>
-        </div>
     <style>
         body {
             background-color: #ffe8d4;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .back-link a {
+            background-color: #e65c00;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .back-link a:hover {
+            background-color: #d63384;
         }
 
         header {
@@ -386,8 +303,11 @@
     </style>
 </head>
 <body>
+    <div class="back-link">
+        <a href="labubônicos.html">← Voltar ao Menu Principal</a>
+    </div>
+
     <header>
-        <img src="logo.jpeg" width="150" height="100" alt="Logo Alpha's Burgues" />
         <h1>🍔✨ Painel Administrativo - Alpha's Burgues</h1>
         <p>Gerencie produtos, pedidos e estatísticas da sua loja</p>
     </header>
@@ -407,11 +327,11 @@
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number" id="total-produtos">12</div>
+                    <div class="stat-number" id="total-produtos">8</div>
                     <div class="stat-label">Produtos Cadastrados</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="pedidos-hoje">8</div>
+                    <div class="stat-number" id="pedidos-hoje">12</div>
                     <div class="stat-label">Pedidos Hoje</div>
                 </div>
                 <div class="stat-card">
@@ -423,6 +343,18 @@
                     <div class="stat-label">Produto Mais Vendido</div>
                 </div>
             </div>
+            
+            <div class="form-section">
+                <h3>📈 Resumo de Atividades</h3>
+                <p>Seja bem-vindo ao painel administrativo! Aqui você pode:</p>
+                <ul>
+                    <li>✅ Gerenciar produtos do cardápio</li>
+                    <li>✅ Acompanhar pedidos</li>
+                    <li>✅ Visualizar estatísticas de vendas</li>
+                    <li>✅ Configurar informações da loja</li>
+                </ul>
+            </div>
+        </div>
 
         <!-- Produtos -->
         <div id="produtos" class="tab-content">
@@ -461,7 +393,7 @@
                     
                     <div class="form-group">
                         <label for="imagem-produto">URL da Imagem:</label>
-                        <input type="url" id="imagem-produto" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
+                        <input type="url" id="imagem-produto" name="imagem" placeholder="IMAGEM.PNG">
                     </div>
                     
                     <button type="submit" class="btn">➕ Adicionar Produto</button>
@@ -491,28 +423,6 @@
         <!-- Pedidos -->
         <div id="pedidos" class="tab-content">
             <h2>📋 Gerenciar Pedidos</h2>
-            
-            <div class="form-section">
-                <h3>🔍 Filtros</h3>
-                <div style="display: flex; gap: 15px; align-items: end; flex-wrap: wrap;">
-                    <div class="form-group" style="flex: 1; min-width: 200px;">
-                        <label for="filtro-data">Data:</label>
-                        <input type="date" id="filtro-data">
-                    </div>
-                    <div class="form-group" style="flex: 1; min-width: 200px;">
-                        <label for="filtro-status">Status:</label>
-                        <select id="filtro-status">
-                            <option value="">Todos</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="preparando">Preparando</option>
-                            <option value="pronto">Pronto</option>
-                            <option value="entregue">Entregue</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-secondary" onclick="filtrarPedidos()">🔍 Filtrar</button>
-                </div>
-            </div>
-            
             <div class="products-table">
                 <table>
                     <thead>
@@ -527,40 +437,7 @@
                         </tr>
                     </thead>
                     <tbody id="tabela-pedidos">
-                        <tr class="product-item">
-                            <td>#001</td>
-                            <td>João Silva</td>
-                            <td>Combo Virgínia (1x), Coca Virgínia (1x)</td>
-                            <td>R$ 216,90</td>
-                            <td><select onchange="atualizarStatusPedido(1, this.value)">
-                                <option value="pendente" selected>Pendente</option>
-                                <option value="preparando">Preparando</option>
-                                <option value="pronto">Pronto</option>
-                                <option value="entregue">Entregue</option>
-                            </select></td>
-                            <td>25/09/2025 19:30</td>
-                            <td class="product-actions">
-                                <button class="btn btn-secondary" onclick="verDetalhesPedido(1)">👁️</button>
-                                <button class="btn btn-danger" onclick="cancelarPedido(1)">❌</button>
-                            </td>
-                        </tr>
-                        <tr class="product-item">
-                            <td>#002</td>
-                            <td>Maria Santos</td>
-                            <td>Morango do Amor (2x), Milkshake (1x)</td>
-                            <td>R$ 105,00</td>
-                            <td><select onchange="atualizarStatusPedido(2, this.value)">
-                                <option value="pendente">Pendente</option>
-                                <option value="preparando" selected>Preparando</option>
-                                <option value="pronto">Pronto</option>
-                                <option value="entregue">Entregue</option>
-                            </select></td>
-                            <td>25/09/2025 19:15</td>
-                            <td class="product-actions">
-                                <button class="btn btn-secondary" onclick="verDetalhesPedido(2)">👁️</button>
-                                <button class="btn btn-danger" onclick="cancelarPedido(2)">❌</button>
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -568,56 +445,15 @@
 
         <!-- Configurações -->
         <div id="configuracoes" class="tab-content">
-            <h2>⚙️ Configurações da Loja</h2>
-            
-            <div class="form-section">
-                <h3>🏪 Informações da Loja</h3>
-                <form id="form-loja">
-                    <div class="form-group">
-                        <label for="nome-loja">Nome da Loja:</label>
-                        <input type="text" id="nome-loja" value="Alpha's Burgues">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="telefone-loja">Telefone:</label>
-                        <input type="tel" id="telefone-loja" value="+5582999999999">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="endereco-loja">Endereço:</label>
-                        <input type="text" id="endereco-loja" value="Rua dos Lanches, 123">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="horario-funcionamento">Horário de Funcionamento:</label>
-                        <input type="text" id="horario-funcionamento" value="17h às 23h">
-                    </div>
-                    
-                    <button type="button" class="btn" onclick="salvarConfiguracoes()">💾 Salvar Alterações</button>
-                </form>
-            </div>
-            
-            <div class="form-section">
-                <h3>🎨 Aparência</h3>
-                <div class="form-group">
-                    <label for="cor-principal">Cor Principal:</label>
-                    <input type="color" id="cor-principal" value="#ffc285">
-                </div>
-                <div class="form-group">
-                    <label for="logo-loja">URL do Logo:</label>
-                    <input type="url" id="logo-loja" value="logo.jpeg">
-                </div>
-                <button type="button" class="btn" onclick="atualizarAparencia()">🎨 Aplicar Mudanças</button>
-            </div>
+            <h2>⚙️ Configurações da Loja</h2>   
             <div class="form-section">
                 <h3>👥 Usuários Cadastrados</h3>
                 <p>Lista de todos os usuários registrados no sistema:</p>
-    
-            <button class="btn btn-secondary" onclick="mostrarUsuarios()">Ver Usuários</button>
-            <button class="btn btn-danger" onclick="limparUsuarios()">Limpar Todos os Usuários</button>
-    
+                <button class="btn btn-secondary" onclick="mostrarUsuarios()">Ver Usuários</button>
+                <button class="btn btn-danger" onclick="limparUsuarios()">Limpar Todos os Usuários</button>
                 <div id="lista-usuarios" style="display: none; margin-top: 15px; max-height: 300px; overflow-y: auto; background: white; padding: 15px; border-radius: 8px;"></div>
             </div>
+            
             <div class="form-section">
                 <h3>🗄️ Backup e Dados</h3>
                 <p>Faça backup dos seus dados regularmente para evitar perdas.</p>
@@ -666,491 +502,633 @@
     </div>
 
     <script>
-       
-class SyncManager {
-    constructor() {
-        this.eventListeners = [];
-        this.init();
-    }
-
-    init() {
-        // Escutar mudanças no localStorage
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'alphas_produtos' || e.key === 'alphas_pedidos') {
-                this.handleDataChange(e.key, e.newValue);
+        // SISTEMA DE SINCRONIZAÇÃO COM O SITE PRINCIPAL
+        class AdminSync {
+            constructor() {
+                this.init();
             }
-        });
 
-        // Escutar mudanças na mesma aba
-        window.addEventListener('alphas_data_changed', (e) => {
-            this.handleDataChange(e.detail.key, e.detail.value);
-        });
-    }
+            init() {
+                // Escutar mudanças do site principal
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'carrinho' || e.key === 'usuario_logado') {
+                        this.processarPedidoDoSite();
+                    }
+                });
 
-    saveData(key, data) {
-        try {
-            const jsonData = JSON.stringify(data);
-            localStorage.setItem(key, jsonData);
-            
-            const event = new CustomEvent('alphas_data_changed', {
-                detail: { key: key, value: jsonData }
-            });
-            window.dispatchEvent(event);
-            
-            return true;
-        } catch (error) {
-            console.error('Erro ao salvar dados:', error);
-            return false;
-        }
-    }
-
-    loadData(key) {
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch (error) {
-            console.error('Erro ao carregar dados:', error);
-            return null;
-        }
-    }
-
-    handleDataChange(key, newValue) {
-        if (!newValue) return;
-
-        try {
-            const data = JSON.parse(newValue);
-            
-            if (key === 'alphas_produtos') {
-                this.updateProducts(data);
-            } else if (key === 'alphas_pedidos') {
-                this.updateOrders(data);
+                // Verificar pedidos pendentes do site
+                this.processarPedidoDoSite();
+                
+                // Carregar dados existentes do site principal
+                this.sincronizarProdutosComSite();
             }
-        } catch (error) {
-            console.error('Erro ao processar mudança de dados:', error);
+
+            processarPedidoDoSite() {
+                try {
+                    const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+                    const usuarioLogado = JSON.parse(localStorage.getItem('usuario_logado') || '{}');
+                    
+                    if (carrinho.length > 0) {
+                        this.criarPedidoAdmin(carrinho, usuarioLogado);
+                        // Limpar carrinho após processar
+                        localStorage.removeItem('carrinho');
+                    }
+                } catch (error) {
+                    console.error('Erro ao processar pedido do site:', error);
+                }
+            }
+
+            criarPedidoAdmin(carrinho, usuario) {
+                const pedidos = JSON.parse(localStorage.getItem('admin_pedidos') || '[]');
+                
+                const novoPedido = {
+                    id: Date.now(),
+                    cliente: usuario.nome || 'Cliente Anônimo',
+                    email: usuario.email || '',
+                    telefone: usuario.telefone || '',
+                    endereco: usuario.endereco || '',
+                    itens: carrinho.map(item => ({
+                        produto: item.produto || item.nome,
+                        quantidade: item.quantidade,
+                        preco: item.preco,
+                        subtotal: item.preco * item.quantidade
+                    })),
+                    total: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
+                    status: 'pendente',
+                    dataHora: new Date().toLocaleString('pt-BR'),
+                    origem: 'site'
+                };
+
+                pedidos.push(novoPedido);
+                localStorage.setItem('admin_pedidos', JSON.stringify(pedidos));
+                
+                // Atualizar interface se estiver na aba de pedidos
+                this.atualizarTabelaPedidos();
+                
+                // Mostrar notificação
+                this.mostrarNotificacao('Novo pedido recebido do site!');
+            }
+
+            sincronizarProdutosComSite() {
+                // Garantir que produtos do admin sejam os mesmos do site
+                const produtosAdmin = JSON.parse(localStorage.getItem('alphas_produtos') || '[]');
+                localStorage.setItem('produtos_cardapio', JSON.stringify(produtosAdmin));
+            }
+
+            atualizarTabelaPedidos() {
+                const pedidos = JSON.parse(localStorage.getItem('admin_pedidos') || '[]');
+                const tabela = document.getElementById('tabela-pedidos');
+                
+                if (!tabela) return;
+
+                tabela.innerHTML = '';
+
+                pedidos.forEach(pedido => {
+                    const row = document.createElement('tr');
+                    row.className = 'product-item';
+                    
+                    const itensTexto = pedido.itens.map(item => 
+                        `${item.produto} (${item.quantidade}x)`
+                    ).join(', ');
+
+                    row.innerHTML = `
+                        <td>#${pedido.id.toString().padStart(3, '0')}</td>
+                        <td>${pedido.cliente}</td>
+                        <td title="${itensTexto}">${itensTexto.substring(0, 50)}${itensTexto.length > 50 ? '...' : ''}</td>
+                        <td>R$ ${pedido.total.toFixed(2)}</td>
+                        <td>
+                            <select onchange="adminSync.atualizarStatusPedido(${pedido.id}, this.value)" style="padding: 5px;">
+                                <option value="pendente" ${pedido.status === 'pendente' ? 'selected' : ''}>🟡 Pendente</option>
+                                <option value="confirmado" ${pedido.status === 'confirmado' ? 'selected' : ''}>🔵 Confirmado</option>
+                                <option value="preparando" ${pedido.status === 'preparando' ? 'selected' : ''}>🟠 Preparando</option>
+                                <option value="pronto" ${pedido.status === 'pronto' ? 'selected' : ''}>🟢 Pronto</option>
+                                <option value="entregue" ${pedido.status === 'entregue' ? 'selected' : ''}>✅ Entregue</option>
+                                <option value="cancelado" ${pedido.status === 'cancelado' ? 'selected' : ''}>❌ Cancelado</option>
+                            </select>
+                        </td>
+                        <td>${pedido.dataHora}</td>
+                        <td class="product-actions">
+                            <button class="btn btn-secondary" onclick="adminSync.verDetalhesPedido(${pedido.id})" title="Ver detalhes">👁️</button>
+                            <button class="btn btn-danger" onclick="adminSync.cancelarPedido(${pedido.id})" title="Cancelar pedido">❌</button>
+                        </td>
+                    `;
+                    tabela.appendChild(row);
+                });
+
+                // Atualizar estatísticas
+                this.atualizarEstatisticas(pedidos);
+            }
+
+            atualizarEstatisticas(pedidos) {
+                const hoje = new Date().toDateString();
+                const pedidosHoje = pedidos.filter(p => new Date(p.dataHora).toDateString() === hoje);
+                
+                document.getElementById('pedidos-hoje').textContent = pedidosHoje.length;
+                
+                const faturamentoHoje = pedidosHoje
+                    .filter(p => p.status !== 'cancelado')
+                    .reduce((sum, p) => sum + p.total, 0);
+                    
+                document.getElementById('faturamento-dia').textContent = `R$ ${faturamentoHoje.toFixed(2)}`;
+                
+                // Produto mais vendido
+                const produtosVendidos = {};
+                pedidosHoje.forEach(pedido => {
+                    pedido.itens.forEach(item => {
+                        produtosVendidos[item.produto] = (produtosVendidos[item.produto] || 0) + item.quantidade;
+                    });
+                });
+                
+                const produtoPopular = Object.keys(produtosVendidos).reduce((a, b) => 
+                    produtosVendidos[a] > produtosVendidos[b] ? a : b, 'Nenhum'
+                );
+                
+                document.getElementById('produto-popular').textContent = produtoPopular;
+            }
+
+            atualizarStatusPedido(id, novoStatus) {
+                const pedidos = JSON.parse(localStorage.getItem('admin_pedidos') || '[]');
+                const pedido = pedidos.find(p => p.id === id);
+                
+                if (pedido) {
+                    pedido.status = novoStatus;
+                    pedido.ultimaAtualizacao = new Date().toLocaleString('pt-BR');
+                    localStorage.setItem('admin_pedidos', JSON.stringify(pedidos));
+                    
+                    this.mostrarNotificacao(`Pedido #${id} atualizado para: ${this.getStatusTexto(novoStatus)}`);
+                    this.atualizarEstatisticas(pedidos);
+                }
+            }
+
+            verDetalhesPedido(id) {
+                const pedidos = JSON.parse(localStorage.getItem('admin_pedidos') || '[]');
+                const pedido = pedidos.find(p => p.id === id);
+                
+                if (pedido) {
+                    let detalhes = `
+=== PEDIDO #${id} ===
+
+Cliente: ${pedido.cliente}
+Email: ${pedido.email || 'Não informado'}
+Telefone: ${pedido.telefone || 'Não informado'}
+Endereço: ${pedido.endereco || 'Não informado'}
+
+Status: ${this.getStatusTexto(pedido.status)}
+Data/Hora: ${pedido.dataHora}
+${pedido.ultimaAtualizacao ? `Última atualização: ${pedido.ultimaAtualizacao}` : ''}
+
+=== ITENS ===
+`;
+                    
+                    pedido.itens.forEach(item => {
+                        detalhes += `• ${item.produto} - Qtd: ${item.quantidade}x - R$ ${item.preco.toFixed(2)} = R$ ${item.subtotal.toFixed(2)}\n`;
+                    });
+                    
+                    detalhes += `\nTOTAL: R$ ${pedido.total.toFixed(2)}`;
+                    
+                    alert(detalhes);
+                }
+            }
+
+            cancelarPedido(id) {
+                if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+                    this.atualizarStatusPedido(id, 'cancelado');
+                }
+            }
+
+            getStatusTexto(status) {
+                const statusMap = {
+                    'pendente': '🟡 Pendente',
+                    'confirmado': '🔵 Confirmado', 
+                    'preparando': '🟠 Preparando',
+                    'pronto': '🟢 Pronto',
+                    'entregue': '✅ Entregue',
+                    'cancelado': '❌ Cancelado'
+                };
+                return statusMap[status] || status;
+            }
+
+            mostrarNotificacao(mensagem) {
+                // Criar notificação toast
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    z-index: 9999;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                    animation: slideIn 0.3s ease;
+                `;
+                toast.textContent = mensagem;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            sincronizarProdutosParaSite() {
+                // Quando produtos são modificados no admin, atualizar no site
+                localStorage.setItem('produtos_cardapio', JSON.stringify(produtos));
+                this.mostrarNotificacao('Produtos sincronizados com o site principal!');
+            }
         }
-    }
 
-    updateProducts(produtos) {
-        if (typeof carregarProdutos === 'function') {
-            window.produtos = produtos;
-            carregarProdutos();
-        }
-    }
+        // Instanciar sistema de sincronização
+        const adminSync = new AdminSync();
 
-    updateOrders(pedidos) {
-        if (document.getElementById('tabela-pedidos')) {
-            this.updateOrdersTable(pedidos);
-        }
-    }
-
-    updateOrdersTable(pedidos) {
-        const tabela = document.getElementById('tabela-pedidos');
-        if (!tabela) return;
-
-        // Limpar tabela mantendo header
-        tabela.innerHTML = '';
-
-        // Pedidos estáticos + novos pedidos
-        const todosOsPedidos = [
-            ...pedidos
+        // Produtos padrão
+        const produtosPadrao = [
+            {
+                id: 1,
+                nome: "Combo Virgínia",
+                categoria: "combos",
+                preco: 200.00,
+                descricao: "Burger artesanal com brinde especial",
+                imagem: ""
+            },
+            {
+                id: 2,
+                nome: "Combo Labubônico", 
+                categoria: "combos",
+                preco: 90.00,
+                descricao: "Combo delicioso com brinquedo do Labubu",
+                imagem: ""
+            },
+            {
+                id: 3,
+                nome: "Combo Boobie Goods",
+                categoria: "combos", 
+                preco: 75.90,
+                descricao: "Perfeito para quem ama lanche bom e mimo fofo",
+                imagem: ""
+            },
+            {
+                id: 4,
+                nome: "Morango do Amor",
+                categoria: "doces",
+                preco: 40.00,
+                descricao: "Morangos frescos com chocolate",
+                imagem: ""
+            },
+            {
+                id: 5,
+                nome: "Waffles",
+                categoria: "doces",
+                preco: 50.00,
+                descricao: "Waffles crocantes com chantilly e frutas",
+                imagem: ""
+            },
+            {
+                id: 6,
+                nome: "Milkshake de Pistache",
+                categoria: "bebidas",
+                preco: 25.00,
+                descricao: "Milkshake cremoso de pistache",
+                imagem: ""
+            },
+            {
+                id: 7,
+                nome: "Duo Pistachudo",
+                categoria: "bebidas",
+                preco: 60.00,
+                descricao: "Milkshake de Pistache + Morango do Amor com brigadeiro de pistache",
+                imagem: ""
+            },
+            {
+                id: 8,
+                nome: "Refrigerante 350ml",
+                categoria: "bebidas",
+                preco: 16.90,
+                descricao: "Refrigerante gelado disponível em diversos sabores",
+                imagem: ""
+            }
         ];
 
-        todosOsPedidos.forEach(pedido => {
-            const row = document.createElement('tr');
-            row.className = 'product-item';
-            row.innerHTML = `
-                <td>#${pedido.id.toString().padStart(3, '0')}</td>
-                <td>${pedido.cliente}</td>
-                <td>${pedido.itens}</td>
-                <td>R$ ${pedido.total.toFixed(2)}</td>
-                <td>
-                    <select onchange="atualizarStatusPedido(${pedido.id}, this.value)">
-                        <option value="pendente" ${pedido.status === 'pendente' ? 'selected' : ''}>Pendente</option>
-                        <option value="preparando" ${pedido.status === 'preparando' ? 'selected' : ''}>Preparando</option>
-                        <option value="pronto" ${pedido.status === 'pronto' ? 'selected' : ''}>Pronto</option>
-                        <option value="entregue" ${pedido.status === 'entregue' ? 'selected' : ''}>Entregue</option>
-                    </select>
-                </td>
-                <td>${pedido.dataHora}</td>
-                <td class="product-actions">
-                    <button class="btn btn-secondary" onclick="verDetalhesPedido(${pedido.id})">👁️</button>
-                    <button class="btn btn-danger" onclick="cancelarPedido(${pedido.id})">❌</button>
-                </td>
-            `;
-            tabela.appendChild(row);
+        // Carregar produtos do localStorage ou usar padrão
+        let produtos = [];
+        let proximoId = 1;
+
+        function inicializarProdutos() {
+            try {
+                const produtosLocalStorage = localStorage.getItem('alphas_produtos');
+                if (produtosLocalStorage) {
+                    produtos = JSON.parse(produtosLocalStorage);
+                } else {
+                    produtos = [...produtosPadrao];
+                    localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+                }
+                proximoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+                produtos = [...produtosPadrao];
+                localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+            }
+        }
+
+        // Controle de abas
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Carregar produtos na tabela
+        function carregarProdutos() {
+            const tabela = document.getElementById('tabela-produtos');
+            if (!tabela) return;
+            
+            tabela.innerHTML = '';
+            
+            produtos.forEach(produto => {
+                const row = document.createElement('tr');
+                row.className = 'product-item';
+                row.innerHTML = `
+                    <td>
+                        <div style="width: 60px; height: 60px; background-color: #ffc285; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #8B4513; font-size: 12px;">
+                            ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" class="product-image" onerror="this.style.display='none'">` : 'Sem Imagem'}
+                        </div>
+                    </td>
+                    <td>${produto.nome}</td>
+                    <td>${produto.categoria}</td>
+                    <td>R$ ${produto.preco.toFixed(2)}</td>
+                    <td class="product-actions">
+                        <button class="btn btn-secondary" onclick="editarProduto(${produto.id})">✏️</button>
+                        <button class="btn btn-danger" onclick="excluirProduto(${produto.id})">🗑️</button>
+                    </td>
+                `;
+                tabela.appendChild(row);
+            });
+            
+            // Atualizar estatísticas
+            document.getElementById('total-produtos').textContent = produtos.length;
+        }
+
+        // Adicionar produto
+        document.addEventListener('DOMContentLoaded', function() {
+            const formProduto = document.getElementById('form-produto');
+            if (formProduto) {
+                formProduto.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const novoProduto = {
+                        id: proximoId++,
+                        nome: formData.get('nome'),
+                        categoria: formData.get('categoria'),
+                        preco: parseFloat(formData.get('preco')),
+                        descricao: formData.get('descricao') || '',
+                        imagem: formData.get('imagem') || ''
+                    };
+                    
+                    produtos.push(novoProduto);
+                    localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+                    carregarProdutos();
+                    mostrarMensagem('produto-success', 'Produto adicionado com sucesso!');
+                    this.reset();
+                });
+            }
         });
 
-        // Atualizar estatísticas
-        document.getElementById('pedidos-hoje').textContent = todosOsPedidos.length;
-        const faturamento = todosOsPedidos.reduce((sum, p) => sum + p.total, 0);
-        document.getElementById('faturamento-dia').textContent = `R$ ${faturamento.toFixed(2)}`;
-    }
+        // Editar produto
+        function editarProduto(id) {
+            const produto = produtos.find(p => p.id === id);
+            if (produto) {
+                document.getElementById('edit-id').value = produto.id;
+                document.getElementById('edit-nome').value = produto.nome;
+                document.getElementById('edit-categoria').value = produto.categoria;
+                document.getElementById('edit-preco').value = produto.preco;
+                document.getElementById('edit-descricao').value = produto.descricao;
+                document.getElementById('edit-imagem').value = produto.imagem;
+                document.getElementById('modal-editar').style.display = 'block';
+            }
+        }
 
-    addOrder(carrinhoData, clienteData) {
-        const pedidos = this.loadData('alphas_pedidos') || [];
-        
-        const novoPedido = {
-            id: Date.now(),
-            cliente: clienteData ? clienteData.nome : 'Cliente Anônimo',
-            itens: carrinhoData.map(item => `${item.produto} (${item.quantidade}x)`).join(', '),
-            total: carrinhoData.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
-            status: 'pendente',
-            dataHora: new Date().toLocaleString('pt-BR'),
-            detalhes: carrinhoData
-        };
+        // Salvar edição
+        document.addEventListener('DOMContentLoaded', function() {
+            const formEditarProduto = document.getElementById('form-editar-produto');
+            if (formEditarProduto) {
+                formEditarProduto.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const id = parseInt(document.getElementById('edit-id').value);
+                    const produto = produtos.find(p => p.id === id);
+                    
+                    if (produto) {
+                        produto.nome = document.getElementById('edit-nome').value;
+                        produto.categoria = document.getElementById('edit-categoria').value;
+                        produto.preco = parseFloat(document.getElementById('edit-preco').value);
+                        produto.descricao = document.getElementById('edit-descricao').value;
+                        produto.imagem = document.getElementById('edit-imagem').value;
+                        
+                        localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+                        carregarProdutos();
+                        fecharModal();
+                        mostrarMensagem('produto-success', 'Produto atualizado com sucesso!');
+                    }
+                });
+            }
+        });
 
-        pedidos.push(novoPedido);
-        this.saveData('alphas_pedidos', pedidos);
+        // Excluir produto
+        function excluirProduto(id) {
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+                produtos = produtos.filter(p => p.id !== id);
+                localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+                carregarProdutos();
+                mostrarMensagem('produto-success', 'Produto excluído com sucesso!');
+            }
+        }
 
-        return novoPedido.id;
-    }
-}
+        // Modal
+        function fecharModal() {
+            document.getElementById('modal-editar').style.display = 'none';
+        }
 
-// Inicializar sistema de sincronização
-const syncManager = new SyncManager();
+        // Limpar formulário
+        function limparFormulario() {
+            document.getElementById('form-produto').reset();
+        }
 
-// ===== PRODUTOS PADRÃO =====
-const produtosPadrao = [
-    {
-        id: 1,
-        nome: "Combo Virgínia",
-        categoria: "combos",
-        preco: 200.00,
-        descricao: "Burger artesanal com brinde especial",
-        imagem: "viriginia.jpeg"
-    },
-    {
-        id: 2,
-        nome: "Combo Labubônico", 
-        categoria: "combos",
-        preco: 90.00,
-        descricao: "Combo delicioso com brinquedo do Labubu",
-        imagem: "labubu.jpeg"
-    },
-    {
-        id: 3,
-        nome: "Combo Boobie Goods",
-        categoria: "combos", 
-        preco: 75.90,
-        descricao: "Perfeito para quem ama lanche bom e mimo fofo",
-        imagem: "bobie gods.jpeg"
-    },
-    {
-        id: 4,
-        nome: "Morango do Amor",
-        categoria: "doces",
-        preco: 40.00,
-        descricao: "Morangos frescos com chocolate",
-        imagem: "morango.jpeg"
-    },
-    {
-        id: 5,
-        nome: "Waffles",
-        categoria: "doces",
-        preco: 50.00,
-        descricao: "Waffles crocantes com chantilly e frutas",
-        imagem: "waffles.jpeg"
-    },
-    {
-        id: 6,
-        nome: "Milkshake de Pistache",
-        categoria: "bebidas",
-        preco: 25.00,
-        descricao: "Milkshake cremoso de pistache",
-        imagem: "MILK SHAKE DE PISTACHE .png"
-    },
-    {
-        id: 7,
-        nome: "Duo Pistachudo",
-        categoria: "bebidas",
-        preco: 60.00,
-        descricao: "Milkshake de Pistache + Morango do Amor com brigadeiro de pistache",
-        imagem: "milk cm morango.jpeg"
-    },
-    {
-        id: 8,
-        nome: "Refrigerante 350ml",
-        categoria: "bebidas",
-        preco: 16.90,
-        descricao: "Refrigerante gelado disponível em diversos sabores",
-        imagem: "refri.jpeg"
-    }
-];
+        // Mostrar mensagens
+        function mostrarMensagem(elementId, mensagem) {
+            const elemento = document.getElementById(elementId);
+            if (elemento) {
+                elemento.textContent = mensagem;
+                elemento.style.display = 'block';
+                setTimeout(() => {
+                    elemento.style.display = 'none';
+                }, 5000);
+            }
+        }
 
-// Sistema de dados com sincronização
-let produtos = syncManager.loadData('alphas_produtos') || produtosPadrao;
-let proximoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+        // Pedidos
+        function atualizarStatusPedido(id, status) {
+            console.log(`Pedido ${id} atualizado para: ${status}`);
+            mostrarMensagem('produto-success', `Status do pedido #${id} atualizado para: ${status}`);
+        }
 
-// Salvar produtos padrão se não existirem
-if (!syncManager.loadData('alphas_produtos')) {
-    syncManager.saveData('alphas_produtos', produtos);
-}
+        function verDetalhesPedido(id) {
+            alert(`Visualizando detalhes do pedido #${id}`);
+        }
 
-// Controle de abas
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].classList.remove("active");
-    }
-    tablinks = document.getElementsByClassName("tab-button");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].classList.remove("active");
-    }
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
-}
+        function cancelarPedido(id) {
+            if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+                console.log(`Pedido ${id} cancelado`);
+                mostrarMensagem('produto-success', `Pedido #${id} foi cancelado`);
+            }
+        }
 
-// Produtos
-function carregarProdutos() {
-    const tabela = document.getElementById('tabela-produtos');
-    tabela.innerHTML = '';
-    
-    produtos.forEach(produto => {
-        const row = document.createElement('tr');
-        row.className = 'product-item';
-        row.innerHTML = `
-            <td><img src="${produto.imagem}" alt="${produto.nome}" class="product-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZmZjMjg1Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOEI0NTEzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5JbWFnZW08L3RleHQ+Cjwvc3ZnPg=='"></td>
-            <td>${produto.nome}</td>
-            <td>${produto.categoria}</td>
-            <td>R$ ${produto.preco.toFixed(2)}</td>
-            <td class="product-actions">
-                <button class="btn btn-secondary" onclick="editarProduto(${produto.id})">✏️</button>
-                <button class="btn btn-danger" onclick="excluirProduto(${produto.id})">🗑️</button>
-            </td>
-        `;
-        tabela.appendChild(row);
-    });
-    
-    document.getElementById('total-produtos').textContent = produtos.length;
-}
+        // Configurações
+        function salvarConfiguracoes() {
+            const config = {
+                nome: document.getElementById('nome-loja').value,
+                telefone: document.getElementById('telefone-loja').value,
+                endereco: document.getElementById('endereco-loja').value,
+                horario: document.getElementById('horario-funcionamento').value
+            };
+            localStorage.setItem('alphas_config', JSON.stringify(config));
+            mostrarMensagem('produto-success', 'Configurações salvas com sucesso!');
+        }
 
-// Adicionar produto
-document.getElementById('form-produto').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const novoProduto = {
-        id: proximoId++,
-        nome: formData.get('nome'),
-        categoria: formData.get('categoria'),
-        preco: parseFloat(formData.get('preco')),
-        descricao: formData.get('descricao') || '',
-        imagem: formData.get('imagem') || ''
-    };
-    
-    produtos.push(novoProduto);
-    syncManager.saveData('alphas_produtos', produtos);
-    carregarProdutos();
-    mostrarMensagem('produto-success', 'Produto adicionado com sucesso!');
-    this.reset();
-});
+        function atualizarAparencia() {
+            const cor = document.getElementById('cor-principal').value;
+            const logo = document.getElementById('logo-loja').value;
+            
+            localStorage.setItem('alphas_cor', cor);
+            localStorage.setItem('alphas_logo', logo);
+            
+            mostrarMensagem('produto-success', 'Aparência atualizada!');
+        }
 
-// Editar produto
-function editarProduto(id) {
-    const produto = produtos.find(p => p.id === id);
-    if (produto) {
-        document.getElementById('edit-id').value = produto.id;
-        document.getElementById('edit-nome').value = produto.nome;
-        document.getElementById('edit-categoria').value = produto.categoria;
-        document.getElementById('edit-preco').value = produto.preco;
-        document.getElementById('edit-descricao').value = produto.descricao;
-        document.getElementById('edit-imagem').value = produto.imagem;
-        document.getElementById('modal-editar').style.display = 'block';
-    }
-}
+        function mostrarUsuarios() {
+            const usuarios = JSON.parse(localStorage.getItem('alphas_usuarios') || '[]');
+            const container = document.getElementById('lista-usuarios');
+            
+            if (usuarios.length === 0) {
+                container.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
+            } else {
+                let html = '<h4>Usuários Cadastrados:</h4><table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #ffc285;"><th style="padding: 8px; border: 1px solid #ddd;">Nome</th><th style="padding: 8px; border: 1px solid #ddd;">Email</th><th style="padding: 8px; border: 1px solid #ddd;">Tipo</th></tr></thead><tbody>';
+                
+                usuarios.forEach(usuario => {
+                    html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${usuario.nome || 'N/A'}</td><td style="padding: 8px; border: 1px solid #ddd;">${usuario.email || 'N/A'}</td><td style="padding: 8px; border: 1px solid #ddd;"><span style="padding: 3px 8px; border-radius: 15px; font-size: 12px; background: ${usuario.tipo === 'admin' ? '#dc3545' : '#28a745'}; color: white;">${usuario.tipo === 'admin' ? 'Admin' : 'Cliente'}</span></td></tr>`;
+                });
+                
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            }
+            
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        }
 
-// Salvar edição
-document.getElementById('form-editar-produto').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const id = parseInt(document.getElementById('edit-id').value);
-    const produto = produtos.find(p => p.id === id);
-    
-    if (produto) {
-        produto.nome = document.getElementById('edit-nome').value;
-        produto.categoria = document.getElementById('edit-categoria').value;
-        produto.preco = parseFloat(document.getElementById('edit-preco').value);
-        produto.descricao = document.getElementById('edit-descricao').value;
-        produto.imagem = document.getElementById('edit-imagem').value;
-        
-        syncManager.saveData('alphas_produtos', produtos);
-        carregarProdutos();
-        fecharModal();
-        mostrarMensagem('produto-success', 'Produto atualizado com sucesso!');
-    }
-});
+        function limparUsuarios() {
+            if (confirm('ATENÇÃO: Esta ação irá remover TODOS os usuários cadastrados. Continuar?')) {
+                localStorage.removeItem('alphas_usuarios');
+                mostrarMensagem('produto-success', 'Todos os usuários foram removidos.');
+                document.getElementById('lista-usuarios').style.display = 'none';
+            }
+        }
 
-// Excluir produto
-function excluirProduto(id) {
-    if (confirm('Tem certeza que deseja excluir este produto?')) {
-        produtos = produtos.filter(p => p.id !== id);
-        syncManager.saveData('alphas_produtos', produtos);
-        carregarProdutos();
-        mostrarMensagem('produto-success', 'Produto excluído com sucesso!');
-    }
-}
+        function exportarDados() {
+            const dados = {
+                produtos: produtos,
+                usuarios: JSON.parse(localStorage.getItem('alphas_usuarios') || '[]'),
+                config: JSON.parse(localStorage.getItem('alphas_config') || '{}')
+            };
+            
+            const dataStr = JSON.stringify(dados, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'alphas-burgues-backup.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            mostrarMensagem('produto-success', 'Dados exportados com sucesso!');
+        }
 
-// Modal
-function fecharModal() {
-    document.getElementById('modal-editar').style.display = 'none';
-}
-
-// Limpar formulário
-function limparFormulario() {
-    document.getElementById('form-produto').reset();
-}
-
-// Mostrar mensagens
-function mostrarMensagem(elementId, mensagem) {
-    const elemento = document.getElementById(elementId);
-    elemento.textContent = mensagem;
-    elemento.style.display = 'block';
-    setTimeout(() => {
-        elemento.style.display = 'none';
-    }, 5000);
-}
-
-// Pedidos
-function atualizarStatusPedido(id, status) {
-    console.log(`Pedido ${id} atualizado para: ${status}`);
-}
-
-function verDetalhesPedido(id) {
-    alert(`Visualizando detalhes do pedido #${id}`);
-}
-
-function cancelarPedido(id) {
-    if (confirm('Tem certeza que deseja cancelar este pedido?')) {
-        console.log(`Pedido ${id} cancelado`);
-    }
-}
-
-function filtrarPedidos() {
-    const data = document.getElementById('filtro-data').value;
-    const status = document.getElementById('filtro-status').value;
-    console.log(`Filtrando por: Data=${data}, Status=${status}`);
-}
-
-// Configurações
-function salvarConfiguracoes() {
-    mostrarMensagem('produto-success', 'Configurações salvas com sucesso!');
-}
-
-function atualizarAparencia() {
-    const cor = document.getElementById('cor-principal').value;
-    document.documentElement.style.setProperty('--cor-principal', cor);
-    mostrarMensagem('produto-success', 'Aparência atualizada!');
-}
-
-function exportarDados() {
-    const dados = JSON.stringify(produtos, null, 2);
-    const blob = new Blob([dados], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'alphas-burgues-produtos.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    mostrarMensagem('produto-success', 'Dados exportados com sucesso!');
-}
-
-function importarDados() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const dados = JSON.parse(e.target.result);
-                    produtos = dados;
-                    syncManager.saveData('alphas_produtos', produtos);
-                    carregarProdutos();
-                    mostrarMensagem('produto-success', 'Dados importados com sucesso!');
-                } catch (error) {
-                    mostrarMensagem('produto-error', 'Erro ao importar dados. Verifique o arquivo.');
+        function importarDados() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const dados = JSON.parse(e.target.result);
+                            
+                            if (dados.produtos) {
+                                produtos = dados.produtos;
+                                localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+                            }
+                            
+                            if (dados.usuarios) {
+                                localStorage.setItem('alphas_usuarios', JSON.stringify(dados.usuarios));
+                            }
+                            
+                            if (dados.config) {
+                                localStorage.setItem('alphas_config', JSON.stringify(dados.config));
+                            }
+                            
+                            carregarProdutos();
+                            mostrarMensagem('produto-success', 'Dados importados com sucesso!');
+                        } catch (error) {
+                            mostrarMensagem('produto-error', 'Erro ao importar dados. Verifique o arquivo.');
+                        }
+                    };
+                    reader.readAsText(file);
                 }
             };
-            reader.readAsText(file);
+            input.click();
         }
-    };
-    input.click();
-}
 
-function confirmarLimparDados() {
-    if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os produtos cadastrados. Esta ação não pode ser desfeita. Tem certeza?')) {
-        if (confirm('Última confirmação: Todos os dados serão perdidos permanentemente. Continuar?')) {
-            produtos = [];
-            syncManager.saveData('alphas_produtos', produtos);
+        function confirmarLimparDados() {
+            if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os dados. Esta ação não pode ser desfeita. Tem certeza?')) {
+                if (confirm('Última confirmação: Todos os dados serão perdidos permanentemente. Continuar?')) {
+                    localStorage.removeItem('alphas_produtos');
+                    localStorage.removeItem('alphas_usuarios');
+                    localStorage.removeItem('alphas_config');
+                    localStorage.removeItem('alphas_pedidos');
+                    
+                    produtos = [];
+                    carregarProdutos();
+                    mostrarMensagem('produto-success', 'Todos os dados foram limpos.');
+                }
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarProdutos();
             carregarProdutos();
-            mostrarMensagem('produto-success', 'Todos os dados foram limpos.');
-        }
-    }
-}
-
-// Inicialização
-window.onload = function() {
-    carregarProdutos();
-    
-    // Carregar e exibir pedidos
-    const pedidos = syncManager.loadData('alphas_pedidos') || [];
-    syncManager.updateOrders(pedidos);
-};
-
-// Fechar modal quando clicar fora
-window.onclick = function(event) {
-    const modal = document.getElementById('modal-editar');
-    if (event.target === modal) {
-        fecharModal();
-    }
-}
- // Funções de gerenciamento de usuários
-function mostrarUsuarios() {
-    const usuarios = JSON.parse(localStorage.getItem('alphas_usuarios') || '[]');
-    const container = document.getElementById('lista-usuarios');
-    
-    if (usuarios.length === 0) {
-        container.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
-    } else {
-        let html = '<h4>Usuários Cadastrados:</h4><table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #ffc285;"><th style="padding: 8px; border: 1px solid #ddd;">Nome</th><th style="padding: 8px; border: 1px solid #ddd;">Email</th><th style="padding: 8px; border: 1px solid #ddd;">Tipo</th><th style="padding: 8px; border: 1px solid #ddd;">Cidade</th></tr></thead><tbody>';
-        
-        usuarios.forEach(usuario => {
-            html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${usuario.nome}</td><td style="padding: 8px; border: 1px solid #ddd;">${usuario.email}</td><td style="padding: 8px; border: 1px solid #ddd;"><span style="padding: 3px 8px; border-radius: 15px; font-size: 12px; background: ${usuario.tipo === 'admin' ? '#dc3545' : '#28a745'}; color: white;">${usuario.tipo === 'admin' ? 'Admin' : 'Cliente'}</span></td><td style="padding: 8px; border: 1px solid #ddd;">${usuario.cidade}, ${usuario.estado}</td></tr>`;
         });
-        
-        html += '</tbody></table>';
-        container.innerHTML = html;
-    }
-    
-    container.style.display = container.style.display === 'none' ? 'block' : 'none';
-}
 
-function limparUsuarios() {
-    if (confirm('ATENÇÃO: Esta ação irá remover TODOS os usuários cadastrados (exceto o admin padrão). Continuar?')) {
-        const adminPadrao = {
-            id: 1,
-            nome: "Admin Sistema",
-            email: "admin@alphasburgues.com",
-            senha: "123456",
-            tipo: "admin",
-            cpf: "000.000.000-00",
-            telefone: "(82) 99999-9999",
-            endereco: "Rua Admin, 123",
-            cidade: "Barretos",
-            estado: "SP"
-        };
-        
-        localStorage.setItem('alphas_usuarios', JSON.stringify([adminPadrao]));
-        mostrarMensagem('produto-success', 'Todos os usuários foram removidos (exceto admin padrão).');
-        
-        // Esconder lista
-        document.getElementById('lista-usuarios').style.display = 'none';
-    }
-}
+        // Fechar modal quando clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-editar');
+            if (event.target === modal) {
+                fecharModal();
+            }
+        }
     </script>
->>>>>>> 8f7c104cad31c16941d434143322262c85ee9df7
 </body>
 </html>
