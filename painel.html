@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <title>Painel Administrativo - Alpha's Burgues</title>
   <style>
@@ -100,5 +101,1056 @@
 
     atualizarTabela();
   </script>
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Alpha's Burgues</title>
+    <div class="back-link">
+            <a href="labubônicos.html">← Voltar ao Menu Principal</a>
+        </div>
+    <style>
+        body {
+            background-color: #ffe8d4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcf96;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #fff0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background-color: #ffc285;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #ffb95c;
+        }
+
+        .tab-button.active {
+            background-color: #e65c00;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background-color: #fff0e0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Formulários */
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffc285;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #e65c00;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background-color: #e65c00;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #d63384;
+        }
+
+        .btn-secondary {
+            background-color: #ffc285;
+            color: #8B4513;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ffb95c;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* Tabela de produtos */
+        .products-table {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ffc285;
+        }
+
+        th {
+            background-color: #ffcf96;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .product-item {
+            transition: background-color 0.3s;
+        }
+
+        .product-item:hover {
+            background-color: #fff5ec;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #ffc285, #ffb95c);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #8B4513;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpeg" width="150" height="100" alt="Logo Alpha's Burgues" />
+        <h1>🍔✨ Painel Administrativo - Alpha's Burgues</h1>
+        <p>Gerencie produtos, pedidos e estatísticas da sua loja</p>
+    </header>
+
+    <div class="container">
+        <!-- Abas de navegação -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'dashboard')">📊 Dashboard</button>
+            <button class="tab-button" onclick="openTab(event, 'produtos')">🛍️ Produtos</button>
+            <button class="tab-button" onclick="openTab(event, 'pedidos')">📋 Pedidos</button>
+            <button class="tab-button" onclick="openTab(event, 'configuracoes')">⚙️ Configurações</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <h2>📊 Dashboard</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-produtos">12</div>
+                    <div class="stat-label">Produtos Cadastrados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pedidos-hoje">8</div>
+                    <div class="stat-label">Pedidos Hoje</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="faturamento-dia">R$ 542,90</div>
+                    <div class="stat-label">Faturamento do Dia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="produto-popular">Combo Virgínia</div>
+                    <div class="stat-label">Produto Mais Vendido</div>
+                </div>
+            </div>
+
+        <!-- Produtos -->
+        <div id="produtos" class="tab-content">
+            <h2>🛍️ Gerenciar Produtos</h2>
+            
+            <div class="success-message" id="produto-success"></div>
+            <div class="error-message" id="produto-error"></div>
+            
+            <div class="form-section">
+                <h3>➕ Adicionar Novo Produto</h3>
+                <form id="form-produto">
+                    <div class="form-group">
+                        <label for="nome-produto">Nome do Produto:</label>
+                        <input type="text" id="nome-produto" name="nome" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="categoria-produto">Categoria:</label>
+                        <select id="categoria-produto" name="categoria" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="combos">Combos</option>
+                            <option value="doces">Doces</option>
+                            <option value="bebidas">Bebidas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="preco-produto">Preço (R$):</label>
+                        <input type="number" id="preco-produto" name="preco" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricao-produto">Descrição:</label>
+                        <textarea id="descricao-produto" name="descricao" placeholder="Descreva o produto..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imagem-produto">URL da Imagem:</label>
+                        <input type="url" id="imagem-produto" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+                    
+                    <button type="submit" class="btn">➕ Adicionar Produto</button>
+                    <button type="button" class="btn btn-secondary" onclick="limparFormulario()">🗑️ Limpar</button>
+                </form>
+            </div>
+            
+            <div class="products-table">
+                <h3>📦 Produtos Cadastrados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagem</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-produtos">
+                        <!-- Produtos serão carregados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pedidos -->
+        <div id="pedidos" class="tab-content">
+            <h2>📋 Gerenciar Pedidos</h2>
+            
+            <div class="form-section">
+                <h3>🔍 Filtros</h3>
+                <div style="display: flex; gap: 15px; align-items: end; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="filtro-data">Data:</label>
+                        <input type="date" id="filtro-data">
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="filtro-status">Status:</label>
+                        <select id="filtro-status">
+                            <option value="">Todos</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="preparando">Preparando</option>
+                            <option value="pronto">Pronto</option>
+                            <option value="entregue">Entregue</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="filtrarPedidos()">🔍 Filtrar</button>
+                </div>
+            </div>
+            
+            <div class="products-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Itens</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Data/Hora</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-pedidos">
+                        <tr class="product-item">
+                            <td>#001</td>
+                            <td>João Silva</td>
+                            <td>Combo Virgínia (1x), Coca Virgínia (1x)</td>
+                            <td>R$ 216,90</td>
+                            <td><select onchange="atualizarStatusPedido(1, this.value)">
+                                <option value="pendente" selected>Pendente</option>
+                                <option value="preparando">Preparando</option>
+                                <option value="pronto">Pronto</option>
+                                <option value="entregue">Entregue</option>
+                            </select></td>
+                            <td>25/09/2025 19:30</td>
+                            <td class="product-actions">
+                                <button class="btn btn-secondary" onclick="verDetalhesPedido(1)">👁️</button>
+                                <button class="btn btn-danger" onclick="cancelarPedido(1)">❌</button>
+                            </td>
+                        </tr>
+                        <tr class="product-item">
+                            <td>#002</td>
+                            <td>Maria Santos</td>
+                            <td>Morango do Amor (2x), Milkshake (1x)</td>
+                            <td>R$ 105,00</td>
+                            <td><select onchange="atualizarStatusPedido(2, this.value)">
+                                <option value="pendente">Pendente</option>
+                                <option value="preparando" selected>Preparando</option>
+                                <option value="pronto">Pronto</option>
+                                <option value="entregue">Entregue</option>
+                            </select></td>
+                            <td>25/09/2025 19:15</td>
+                            <td class="product-actions">
+                                <button class="btn btn-secondary" onclick="verDetalhesPedido(2)">👁️</button>
+                                <button class="btn btn-danger" onclick="cancelarPedido(2)">❌</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Configurações -->
+        <div id="configuracoes" class="tab-content">
+            <h2>⚙️ Configurações da Loja</h2>
+            
+            <div class="form-section">
+                <h3>🏪 Informações da Loja</h3>
+                <form id="form-loja">
+                    <div class="form-group">
+                        <label for="nome-loja">Nome da Loja:</label>
+                        <input type="text" id="nome-loja" value="Alpha's Burgues">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefone-loja">Telefone:</label>
+                        <input type="tel" id="telefone-loja" value="+5582999999999">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endereco-loja">Endereço:</label>
+                        <input type="text" id="endereco-loja" value="Rua dos Lanches, 123">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="horario-funcionamento">Horário de Funcionamento:</label>
+                        <input type="text" id="horario-funcionamento" value="17h às 23h">
+                    </div>
+                    
+                    <button type="button" class="btn" onclick="salvarConfiguracoes()">💾 Salvar Alterações</button>
+                </form>
+            </div>
+            
+            <div class="form-section">
+                <h3>🎨 Aparência</h3>
+                <div class="form-group">
+                    <label for="cor-principal">Cor Principal:</label>
+                    <input type="color" id="cor-principal" value="#ffc285">
+                </div>
+                <div class="form-group">
+                    <label for="logo-loja">URL do Logo:</label>
+                    <input type="url" id="logo-loja" value="logo.jpeg">
+                </div>
+                <button type="button" class="btn" onclick="atualizarAparencia()">🎨 Aplicar Mudanças</button>
+            </div>
+            <div class="form-section">
+                <h3>👥 Usuários Cadastrados</h3>
+                <p>Lista de todos os usuários registrados no sistema:</p>
+    
+            <button class="btn btn-secondary" onclick="mostrarUsuarios()">Ver Usuários</button>
+            <button class="btn btn-danger" onclick="limparUsuarios()">Limpar Todos os Usuários</button>
+    
+                <div id="lista-usuarios" style="display: none; margin-top: 15px; max-height: 300px; overflow-y: auto; background: white; padding: 15px; border-radius: 8px;"></div>
+            </div>
+            <div class="form-section">
+                <h3>🗄️ Backup e Dados</h3>
+                <p>Faça backup dos seus dados regularmente para evitar perdas.</p>
+                <button class="btn btn-secondary" onclick="exportarDados()">📥 Exportar Dados</button>
+                <button class="btn btn-secondary" onclick="importarDados()">📤 Importar Dados</button>
+                <button class="btn btn-danger" onclick="confirmarLimparDados()">🗑️ Limpar Todos os Dados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar produto -->
+    <div id="modal-editar" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <h2>✏️ Editar Produto</h2>
+            <form id="form-editar-produto">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-nome">Nome:</label>
+                    <input type="text" id="edit-nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-categoria">Categoria:</label>
+                    <select id="edit-categoria" required>
+                        <option value="combos">Combos</option>
+                        <option value="doces">Doces</option>
+                        <option value="bebidas">Bebidas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-preco">Preço (R$):</label>
+                    <input type="number" id="edit-preco" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-descricao">Descrição:</label>
+                    <textarea id="edit-descricao"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-imagem">URL da Imagem:</label>
+                    <input type="url" id="edit-imagem">
+                </div>
+                <button type="submit" class="btn">💾 Salvar Alterações</button>
+                <button type="button" class="btn btn-secondary" onclick="fecharModal()">❌ Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       
+class SyncManager {
+    constructor() {
+        this.eventListeners = [];
+        this.init();
+    }
+
+    init() {
+        // Escutar mudanças no localStorage
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'alphas_produtos' || e.key === 'alphas_pedidos') {
+                this.handleDataChange(e.key, e.newValue);
+            }
+        });
+
+        // Escutar mudanças na mesma aba
+        window.addEventListener('alphas_data_changed', (e) => {
+            this.handleDataChange(e.detail.key, e.detail.value);
+        });
+    }
+
+    saveData(key, data) {
+        try {
+            const jsonData = JSON.stringify(data);
+            localStorage.setItem(key, jsonData);
+            
+            const event = new CustomEvent('alphas_data_changed', {
+                detail: { key: key, value: jsonData }
+            });
+            window.dispatchEvent(event);
+            
+            return true;
+        } catch (error) {
+            console.error('Erro ao salvar dados:', error);
+            return false;
+        }
+    }
+
+    loadData(key) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            return null;
+        }
+    }
+
+    handleDataChange(key, newValue) {
+        if (!newValue) return;
+
+        try {
+            const data = JSON.parse(newValue);
+            
+            if (key === 'alphas_produtos') {
+                this.updateProducts(data);
+            } else if (key === 'alphas_pedidos') {
+                this.updateOrders(data);
+            }
+        } catch (error) {
+            console.error('Erro ao processar mudança de dados:', error);
+        }
+    }
+
+    updateProducts(produtos) {
+        if (typeof carregarProdutos === 'function') {
+            window.produtos = produtos;
+            carregarProdutos();
+        }
+    }
+
+    updateOrders(pedidos) {
+        if (document.getElementById('tabela-pedidos')) {
+            this.updateOrdersTable(pedidos);
+        }
+    }
+
+    updateOrdersTable(pedidos) {
+        const tabela = document.getElementById('tabela-pedidos');
+        if (!tabela) return;
+
+        // Limpar tabela mantendo header
+        tabela.innerHTML = '';
+
+        // Pedidos estáticos + novos pedidos
+        const todosOsPedidos = [
+            ...pedidos
+        ];
+
+        todosOsPedidos.forEach(pedido => {
+            const row = document.createElement('tr');
+            row.className = 'product-item';
+            row.innerHTML = `
+                <td>#${pedido.id.toString().padStart(3, '0')}</td>
+                <td>${pedido.cliente}</td>
+                <td>${pedido.itens}</td>
+                <td>R$ ${pedido.total.toFixed(2)}</td>
+                <td>
+                    <select onchange="atualizarStatusPedido(${pedido.id}, this.value)">
+                        <option value="pendente" ${pedido.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+                        <option value="preparando" ${pedido.status === 'preparando' ? 'selected' : ''}>Preparando</option>
+                        <option value="pronto" ${pedido.status === 'pronto' ? 'selected' : ''}>Pronto</option>
+                        <option value="entregue" ${pedido.status === 'entregue' ? 'selected' : ''}>Entregue</option>
+                    </select>
+                </td>
+                <td>${pedido.dataHora}</td>
+                <td class="product-actions">
+                    <button class="btn btn-secondary" onclick="verDetalhesPedido(${pedido.id})">👁️</button>
+                    <button class="btn btn-danger" onclick="cancelarPedido(${pedido.id})">❌</button>
+                </td>
+            `;
+            tabela.appendChild(row);
+        });
+
+        // Atualizar estatísticas
+        document.getElementById('pedidos-hoje').textContent = todosOsPedidos.length;
+        const faturamento = todosOsPedidos.reduce((sum, p) => sum + p.total, 0);
+        document.getElementById('faturamento-dia').textContent = `R$ ${faturamento.toFixed(2)}`;
+    }
+
+    addOrder(carrinhoData, clienteData) {
+        const pedidos = this.loadData('alphas_pedidos') || [];
+        
+        const novoPedido = {
+            id: Date.now(),
+            cliente: clienteData ? clienteData.nome : 'Cliente Anônimo',
+            itens: carrinhoData.map(item => `${item.produto} (${item.quantidade}x)`).join(', '),
+            total: carrinhoData.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
+            status: 'pendente',
+            dataHora: new Date().toLocaleString('pt-BR'),
+            detalhes: carrinhoData
+        };
+
+        pedidos.push(novoPedido);
+        this.saveData('alphas_pedidos', pedidos);
+
+        return novoPedido.id;
+    }
+}
+
+// Inicializar sistema de sincronização
+const syncManager = new SyncManager();
+
+// ===== PRODUTOS PADRÃO =====
+const produtosPadrao = [
+    {
+        id: 1,
+        nome: "Combo Virgínia",
+        categoria: "combos",
+        preco: 200.00,
+        descricao: "Burger artesanal com brinde especial",
+        imagem: "viriginia.jpeg"
+    },
+    {
+        id: 2,
+        nome: "Combo Labubônico", 
+        categoria: "combos",
+        preco: 90.00,
+        descricao: "Combo delicioso com brinquedo do Labubu",
+        imagem: "labubu.jpeg"
+    },
+    {
+        id: 3,
+        nome: "Combo Boobie Goods",
+        categoria: "combos", 
+        preco: 75.90,
+        descricao: "Perfeito para quem ama lanche bom e mimo fofo",
+        imagem: "bobie gods.jpeg"
+    },
+    {
+        id: 4,
+        nome: "Morango do Amor",
+        categoria: "doces",
+        preco: 40.00,
+        descricao: "Morangos frescos com chocolate",
+        imagem: "morango.jpeg"
+    },
+    {
+        id: 5,
+        nome: "Waffles",
+        categoria: "doces",
+        preco: 50.00,
+        descricao: "Waffles crocantes com chantilly e frutas",
+        imagem: "waffles.jpeg"
+    },
+    {
+        id: 6,
+        nome: "Milkshake de Pistache",
+        categoria: "bebidas",
+        preco: 25.00,
+        descricao: "Milkshake cremoso de pistache",
+        imagem: "MILK SHAKE DE PISTACHE .png"
+    },
+    {
+        id: 7,
+        nome: "Duo Pistachudo",
+        categoria: "bebidas",
+        preco: 60.00,
+        descricao: "Milkshake de Pistache + Morango do Amor com brigadeiro de pistache",
+        imagem: "milk cm morango.jpeg"
+    },
+    {
+        id: 8,
+        nome: "Refrigerante 350ml",
+        categoria: "bebidas",
+        preco: 16.90,
+        descricao: "Refrigerante gelado disponível em diversos sabores",
+        imagem: "refri.jpeg"
+    }
+];
+
+// Sistema de dados com sincronização
+let produtos = syncManager.loadData('alphas_produtos') || produtosPadrao;
+let proximoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+
+// Salvar produtos padrão se não existirem
+if (!syncManager.loadData('alphas_produtos')) {
+    syncManager.saveData('alphas_produtos', produtos);
+}
+
+// Controle de abas
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active");
+    }
+    tablinks = document.getElementsByClassName("tab-button");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+
+// Produtos
+function carregarProdutos() {
+    const tabela = document.getElementById('tabela-produtos');
+    tabela.innerHTML = '';
+    
+    produtos.forEach(produto => {
+        const row = document.createElement('tr');
+        row.className = 'product-item';
+        row.innerHTML = `
+            <td><img src="${produto.imagem}" alt="${produto.nome}" class="product-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZmZjMjg1Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOEI0NTEzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5JbWFnZW08L3RleHQ+Cjwvc3ZnPg=='"></td>
+            <td>${produto.nome}</td>
+            <td>${produto.categoria}</td>
+            <td>R$ ${produto.preco.toFixed(2)}</td>
+            <td class="product-actions">
+                <button class="btn btn-secondary" onclick="editarProduto(${produto.id})">✏️</button>
+                <button class="btn btn-danger" onclick="excluirProduto(${produto.id})">🗑️</button>
+            </td>
+        `;
+        tabela.appendChild(row);
+    });
+    
+    document.getElementById('total-produtos').textContent = produtos.length;
+}
+
+// Adicionar produto
+document.getElementById('form-produto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const novoProduto = {
+        id: proximoId++,
+        nome: formData.get('nome'),
+        categoria: formData.get('categoria'),
+        preco: parseFloat(formData.get('preco')),
+        descricao: formData.get('descricao') || '',
+        imagem: formData.get('imagem') || ''
+    };
+    
+    produtos.push(novoProduto);
+    syncManager.saveData('alphas_produtos', produtos);
+    carregarProdutos();
+    mostrarMensagem('produto-success', 'Produto adicionado com sucesso!');
+    this.reset();
+});
+
+// Editar produto
+function editarProduto(id) {
+    const produto = produtos.find(p => p.id === id);
+    if (produto) {
+        document.getElementById('edit-id').value = produto.id;
+        document.getElementById('edit-nome').value = produto.nome;
+        document.getElementById('edit-categoria').value = produto.categoria;
+        document.getElementById('edit-preco').value = produto.preco;
+        document.getElementById('edit-descricao').value = produto.descricao;
+        document.getElementById('edit-imagem').value = produto.imagem;
+        document.getElementById('modal-editar').style.display = 'block';
+    }
+}
+
+// Salvar edição
+document.getElementById('form-editar-produto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const id = parseInt(document.getElementById('edit-id').value);
+    const produto = produtos.find(p => p.id === id);
+    
+    if (produto) {
+        produto.nome = document.getElementById('edit-nome').value;
+        produto.categoria = document.getElementById('edit-categoria').value;
+        produto.preco = parseFloat(document.getElementById('edit-preco').value);
+        produto.descricao = document.getElementById('edit-descricao').value;
+        produto.imagem = document.getElementById('edit-imagem').value;
+        
+        syncManager.saveData('alphas_produtos', produtos);
+        carregarProdutos();
+        fecharModal();
+        mostrarMensagem('produto-success', 'Produto atualizado com sucesso!');
+    }
+});
+
+// Excluir produto
+function excluirProduto(id) {
+    if (confirm('Tem certeza que deseja excluir este produto?')) {
+        produtos = produtos.filter(p => p.id !== id);
+        syncManager.saveData('alphas_produtos', produtos);
+        carregarProdutos();
+        mostrarMensagem('produto-success', 'Produto excluído com sucesso!');
+    }
+}
+
+// Modal
+function fecharModal() {
+    document.getElementById('modal-editar').style.display = 'none';
+}
+
+// Limpar formulário
+function limparFormulario() {
+    document.getElementById('form-produto').reset();
+}
+
+// Mostrar mensagens
+function mostrarMensagem(elementId, mensagem) {
+    const elemento = document.getElementById(elementId);
+    elemento.textContent = mensagem;
+    elemento.style.display = 'block';
+    setTimeout(() => {
+        elemento.style.display = 'none';
+    }, 5000);
+}
+
+// Pedidos
+function atualizarStatusPedido(id, status) {
+    console.log(`Pedido ${id} atualizado para: ${status}`);
+}
+
+function verDetalhesPedido(id) {
+    alert(`Visualizando detalhes do pedido #${id}`);
+}
+
+function cancelarPedido(id) {
+    if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+        console.log(`Pedido ${id} cancelado`);
+    }
+}
+
+function filtrarPedidos() {
+    const data = document.getElementById('filtro-data').value;
+    const status = document.getElementById('filtro-status').value;
+    console.log(`Filtrando por: Data=${data}, Status=${status}`);
+}
+
+// Configurações
+function salvarConfiguracoes() {
+    mostrarMensagem('produto-success', 'Configurações salvas com sucesso!');
+}
+
+function atualizarAparencia() {
+    const cor = document.getElementById('cor-principal').value;
+    document.documentElement.style.setProperty('--cor-principal', cor);
+    mostrarMensagem('produto-success', 'Aparência atualizada!');
+}
+
+function exportarDados() {
+    const dados = JSON.stringify(produtos, null, 2);
+    const blob = new Blob([dados], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'alphas-burgues-produtos.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    mostrarMensagem('produto-success', 'Dados exportados com sucesso!');
+}
+
+function importarDados() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    produtos = dados;
+                    syncManager.saveData('alphas_produtos', produtos);
+                    carregarProdutos();
+                    mostrarMensagem('produto-success', 'Dados importados com sucesso!');
+                } catch (error) {
+                    mostrarMensagem('produto-error', 'Erro ao importar dados. Verifique o arquivo.');
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+    input.click();
+}
+
+function confirmarLimparDados() {
+    if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os produtos cadastrados. Esta ação não pode ser desfeita. Tem certeza?')) {
+        if (confirm('Última confirmação: Todos os dados serão perdidos permanentemente. Continuar?')) {
+            produtos = [];
+            syncManager.saveData('alphas_produtos', produtos);
+            carregarProdutos();
+            mostrarMensagem('produto-success', 'Todos os dados foram limpos.');
+        }
+    }
+}
+
+// Inicialização
+window.onload = function() {
+    carregarProdutos();
+    
+    // Carregar e exibir pedidos
+    const pedidos = syncManager.loadData('alphas_pedidos') || [];
+    syncManager.updateOrders(pedidos);
+};
+
+// Fechar modal quando clicar fora
+window.onclick = function(event) {
+    const modal = document.getElementById('modal-editar');
+    if (event.target === modal) {
+        fecharModal();
+    }
+}
+ // Funções de gerenciamento de usuários
+function mostrarUsuarios() {
+    const usuarios = JSON.parse(localStorage.getItem('alphas_usuarios') || '[]');
+    const container = document.getElementById('lista-usuarios');
+    
+    if (usuarios.length === 0) {
+        container.innerHTML = '<p>Nenhum usuário cadastrado.</p>';
+    } else {
+        let html = '<h4>Usuários Cadastrados:</h4><table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #ffc285;"><th style="padding: 8px; border: 1px solid #ddd;">Nome</th><th style="padding: 8px; border: 1px solid #ddd;">Email</th><th style="padding: 8px; border: 1px solid #ddd;">Tipo</th><th style="padding: 8px; border: 1px solid #ddd;">Cidade</th></tr></thead><tbody>';
+        
+        usuarios.forEach(usuario => {
+            html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${usuario.nome}</td><td style="padding: 8px; border: 1px solid #ddd;">${usuario.email}</td><td style="padding: 8px; border: 1px solid #ddd;"><span style="padding: 3px 8px; border-radius: 15px; font-size: 12px; background: ${usuario.tipo === 'admin' ? '#dc3545' : '#28a745'}; color: white;">${usuario.tipo === 'admin' ? 'Admin' : 'Cliente'}</span></td><td style="padding: 8px; border: 1px solid #ddd;">${usuario.cidade}, ${usuario.estado}</td></tr>`;
+        });
+        
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+    
+    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+}
+
+function limparUsuarios() {
+    if (confirm('ATENÇÃO: Esta ação irá remover TODOS os usuários cadastrados (exceto o admin padrão). Continuar?')) {
+        const adminPadrao = {
+            id: 1,
+            nome: "Admin Sistema",
+            email: "admin@alphasburgues.com",
+            senha: "123456",
+            tipo: "admin",
+            cpf: "000.000.000-00",
+            telefone: "(82) 99999-9999",
+            endereco: "Rua Admin, 123",
+            cidade: "Barretos",
+            estado: "SP"
+        };
+        
+        localStorage.setItem('alphas_usuarios', JSON.stringify([adminPadrao]));
+        mostrarMensagem('produto-success', 'Todos os usuários foram removidos (exceto admin padrão).');
+        
+        // Esconder lista
+        document.getElementById('lista-usuarios').style.display = 'none';
+    }
+}
+    </script>
+>>>>>>> 8f7c104cad31c16941d434143322262c85ee9df7
 </body>
 </html>

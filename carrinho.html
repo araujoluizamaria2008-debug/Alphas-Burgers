@@ -302,7 +302,7 @@ body {
 </div>
 
 <script>
-// Sistema de carrinho melhorado
+// Sistema de carrinho
 class CarrinhoManager {
   constructor() {
     this.carrinho = [];
@@ -530,45 +530,71 @@ class CarrinhoManager {
     }, 3000);
   }
 
-  // Finaliza pedido via WhatsApp
-  finalizarPedido() {
+// Finaliza pedido via WhatsApp E registra no sistema
+finalizarPedido() {
     if (this.carrinho.length === 0) {
-      alert('Seu carrinho está vazio!');
-      return;
+        alert('Seu carrinho está vazio!');
+        return;
     }
     
     document.getElementById('loading').style.display = 'block';
     
+    // Registrar pedido no sistema ANTES de enviar WhatsApp
+    const clienteData = JSON.parse(sessionStorage.getItem('alphas_usuario') || 'null');
+    
+    // Salvar pedido usando localStorage para persistir entre páginas
+    const pedidos = JSON.parse(localStorage.getItem('alphas_pedidos') || '[]');
+    const novoPedido = {
+        id: Date.now(),
+        cliente: clienteData ? clienteData.nome : 'Cliente Anônimo',
+        itens: this.carrinho.map(item => `${item.produto} (${item.quantidade}x)`).join(', '),
+        total: this.carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
+        status: 'pendente',
+        dataHora: new Date().toLocaleString('pt-BR'),
+        detalhes: this.carrinho
+    };
+    
+    pedidos.push(novoPedido);
+    localStorage.setItem('alphas_pedidos', JSON.stringify(pedidos));
+    
+    // Notificar outras abas sobre o novo pedido
+    const event = new CustomEvent('alphas_data_changed', {
+        detail: { key: 'alphas_pedidos', value: JSON.stringify(pedidos) }
+    });
+    window.dispatchEvent(event);
+    
     setTimeout(() => {
-      let mensagem = '🍔 *PEDIDO ALPHA\'S BURGUES* 🍔\n\n';
-      let total = 0;
-      let totalItens = 0;
-      
-      this.carrinho.forEach((item, index) => {
-        const subtotal = item.preco * item.quantidade;
-        total += subtotal;
-        totalItens += item.quantidade;
+        let mensagem = '🍔 *PEDIDO ALPHA\'S BURGUES* 🍔\n\n';
+        let total = 0;
+        let totalItens = 0;
         
-        mensagem += `*${index + 1}.* ${item.produto}\n`;
-        if (item.extras) mensagem += `   ${item.extras}\n`;
-        mensagem += `   Qtd: ${item.quantidade}x | Valor: R$ ${subtotal.toFixed(2)}\n\n`;
-      });
-      
-      mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-      mensagem += `*RESUMO:*\n`;
-      mensagem += `Total de itens: ${totalItens}\n`;
-      mensagem += `*VALOR TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-      mensagem += `📍 Preciso confirmar endereço para entrega\n`;
-      mensagem += `💳 Forma de pagamento: (a combinar)\n\n`;
-      mensagem += `Obrigado por escolher Alpha\'s Burgues! 🎉`;
-      
-      const numeroWhatsApp = '5582999999999'; // Substitua pelo número real
-      const whatsappURL = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-      
-      document.getElementById('loading').style.display = 'none';
-      window.open(whatsappURL, '_blank');
+        this.carrinho.forEach((item, index) => {
+            const subtotal = item.preco * item.quantidade;
+            total += subtotal;
+            totalItens += item.quantidade;
+            
+            mensagem += `*${index + 1}.* ${item.produto}\n`;
+            if (item.extras) mensagem += `   ${item.extras}\n`;
+            mensagem += `   Qtd: ${item.quantidade}x | Valor: R$ ${subtotal.toFixed(2)}\n\n`;
+        });
+        
+        mensagem += `─────────────────────────────\n`;
+        mensagem += `*RESUMO:*\n`;
+        mensagem += `Total de itens: ${totalItens}\n`;
+        mensagem += `*VALOR TOTAL: R$ ${total.toFixed(2)}*\n\n`;
+        mensagem += `📍 Preciso confirmar endereço para entrega\n`;
+        mensagem += `💳 Forma de pagamento: (a combinar)\n\n`;
+        mensagem += `Obrigado por escolher Alpha\'s Burgues! 🎉`;
+        
+        const numeroWhatsApp = '5582999999999';
+        const whatsappURL = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+        
+        document.getElementById('loading').style.display = 'none';
+        console.log(`Pedido #${novoPedido.id} registrado no sistema em tempo real!`);
+        
+        window.open(whatsappURL, '_blank');
     }, 1000);
-  }
+}
 }
 
 // Inicializa o carrinho quando a página carrega
@@ -588,6 +614,17 @@ function limparCarrinho() {
 
 function finalizarPedido() {
   carrinho.finalizarPedido();
+}
+// Função para admin acessar dados de pedidos
+function gerarRelatorio() {
+    const dadosCarrinho = {
+        timestamp: new Date().toISOString(),
+        itens: carrinho,
+        total: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0)
+    };
+    
+    console.log('Dados do pedido:', dadosCarrinho);
+    return dadosCarrinho;
 }
 </script>
 
