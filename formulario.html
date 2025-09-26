@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Produto | Alpha's Burgues</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff5ec;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #e65c00;
+      text-align: center;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff0e0;
+      padding: 20px;
+      border: 3px solid #ffc285;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #e65c00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #cc4f00;
+    }
+
+    .mensagem {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cadastro de Produto</h1>
+
+  <form id="formProduto">
+    <label for="nome">Nome do Produto:</label>
+    <input type="text" id="nome" required>
+
+    <label for="preco">Preço (R$):</label>
+    <input type="number" id="preco" step="0.01" min="0" required>
+
+    <label for="categoria">Categoria:</label>
+    <select id="categoria" required>
+      <option value="">Selecione</option>
+      <option value="destaque">Destaque</option>
+      <option value="combo">Combos</option>
+      <option value="bebida">Bebidas</option>
+      <option value="doce">Doces</option>
+    </select>
+
+    <label for="imagem">URL da Imagem:</label>
+    <input type="text" id="imagem" placeholder="ex: morango.jpeg" required>
+
+    <button type="submit">Cadastrar Produto</button>
+    <div class="mensagem" id="mensagem"></div>
+  </form>
+
+  <script>
+    document.getElementById('formProduto').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const preco = parseFloat(document.getElementById('preco').value);
+      const categoria = document.getElementById('categoria').value;
+      const imagem = document.getElementById('imagem').value.trim();
+
+      if (!nome || !preco || !categoria || !imagem) {
+        document.getElementById('mensagem').textContent = "Preencha todos os campos corretamente!";
+        return;
+      }
+
+      const novoProduto = {
+        nome,
+        preco,
+        categoria,
+        imagem
+      };
+
+      let produtos = JSON.parse(localStorage.getItem('alphas_produtos') || '[]');
+      produtos.push(novoProduto);
+      localStorage.setItem('alphas_produtos', JSON.stringify(produtos));
+
+      document.getElementById('mensagem').textContent = "Produto cadastrado com sucesso!";
+
+      // Limpa o formulário
+      document.getElementById('formProduto').reset();
+    });
+  </script>
+
+</body>
+</html>
+s
